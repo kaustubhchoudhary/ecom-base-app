@@ -12,6 +12,8 @@ import jakarta.transaction.Transactional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+    List<Product> findByCategoryId(Long categoryId);
+
     // Derived Queries
     boolean existsByName(String name);
 
