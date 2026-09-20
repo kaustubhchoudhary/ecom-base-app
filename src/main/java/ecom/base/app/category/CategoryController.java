@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ecom.base.app.product.Product;
 import ecom.base.app.response.dtos.ApiResponseDTO;
 
 @RestController
@@ -88,4 +89,12 @@ public class CategoryController {
                                                 categoryService.patchCategory(id)));
         }
 
+        @GetMapping("/{categoryId}/products")
+        public ResponseEntity<List<Product>> getProductsByCategory(
+                        @PathVariable Long categoryId) {
+
+                List<Product> products = categoryService.getProductsByCategory(categoryId);
+
+                return ResponseEntity.ok(products);
+        }
 }

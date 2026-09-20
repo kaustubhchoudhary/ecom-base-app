@@ -8,15 +8,19 @@ import org.springframework.stereotype.Service;
 import ecom.base.app.exceptions.CategoryAlreadyInactiveException;
 import ecom.base.app.exceptions.DuplicateResourceException;
 import ecom.base.app.exceptions.ResourceNotFoundException;
+import ecom.base.app.product.Product;
+import ecom.base.app.product.ProductRepository;
 import jakarta.transaction.Transactional;
 
 @Service
 public class CategoryService {
 
     final CategoryRepository categoryRepository;
+    final ProductRepository productRepository;
 
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(CategoryRepository categoryRepository, ProductRepository productRepository) {
         this.categoryRepository = categoryRepository;
+        this.productRepository = productRepository;
     }
 
     CategoryResponseDTO addCategory(CategoryRequestDTO categoryRequestDTO) {
@@ -56,12 +60,11 @@ public class CategoryService {
     }
 
     CategoryResponseDTO getCategoryById(Long id) {
-        // System.out.println("\n Before find By Id");
+
         Category categoryFetchedFromDb = categoryRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category with id : " + id + " not found"));
 
-        // System.out.println("\n After find By Id");
         System.out.println(categoryFetchedFromDb);
         CategoryResponseDTO categoryResponseDTO = CategoryMapper.toCategoryResponseDTO(categoryFetchedFromDb);
 
@@ -72,7 +75,7 @@ public class CategoryService {
     public CategoryResponseDTO updateCategory(Long id,
             CategoryUpdateRequestDTO categoryUpdateRequestDTO) {
 
-        if (!categoryRepository.existsById(id)) // At this point categroy entity is not managed by JPA, Transient state
+        if (!categoryRepository.existsById(id))
             throw new ResourceNotFoundException("Category with id : " + id + " does not exist");
 
         String categoryName = categoryUpdateRequestDTO.getName();
@@ -102,9 +105,19 @@ public class CategoryService {
         if (!category.getActive())
             throw new CategoryAlreadyInactiveException("Category with id : " + id + " already inactive");
 
+        // category is in transient state, so no need to save again
         category.setActive(false);
 
         return CategoryMapper.toCategoryResponseDTO(category);
 
+    }
+
+    public List<Product> getProductsByCategory(Long categoryId) {
+
+        if (!categoryRepository.existsById(categoryId)) {
+            throw new ResourceNotFoundException("Category with ID " + categoryId + " not found");
+        }
+
+        return productRepository.findByCategoryId(categoryId);
     }
 }
