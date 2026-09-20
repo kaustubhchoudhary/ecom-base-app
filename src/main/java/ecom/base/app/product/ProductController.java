@@ -81,11 +81,13 @@ public class ProductController {
     }
 
     @PatchMapping("/{id}")
-    ResponseEntity<ApiResponseDTO<ProductResponseDTO>> patchCategory(@PathVariable Long id) {
-        return ResponseEntity
-                .ok(new ApiResponseDTO<ProductResponseDTO>(
-                        "The status of Product with id: " + id + " set to false",
-                        productService.patchCategory(id)));
+    public ResponseEntity<ApiResponseDTO<ProductResponseDTO>> patchProduct(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                new ApiResponseDTO<ProductResponseDTO>(
+                        "Product status toggled successfully",
+                        productService.patchProduct(id)));
     }
 
     @PutMapping(value = "/{productId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

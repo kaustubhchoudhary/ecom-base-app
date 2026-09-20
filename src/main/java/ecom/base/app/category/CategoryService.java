@@ -95,21 +95,17 @@ public class CategoryService {
     @Transactional
     CategoryResponseDTO patchCategory(Long id) {
 
-        Optional<Category> optionalCategory = categoryRepository.findById(id); // Persistent
+        Optional<Category> optionalCategory = categoryRepository.findById(id);
 
         if (optionalCategory.isEmpty())
-            throw new ResourceNotFoundException("Category with id : " + id + " not found");
+            throw new ResourceNotFoundException(
+                    "Category with id : " + id + " not found");
 
         Category category = optionalCategory.get();
 
-        if (!category.getActive())
-            throw new EntityAlreadyInactiveException("Category with id : " + id + " already inactive");
-
-        // category is in transient state, so no need to save again
-        category.setActive(false);
+        category.setActive(!category.getActive());
 
         return CategoryMapper.toCategoryResponseDTO(category);
-
     }
 
     public List<Product> getProductsByCategory(Long categoryId) {
