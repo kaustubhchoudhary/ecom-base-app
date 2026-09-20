@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import ecom.base.app.category.CategoryResponseDTO;
+import ecom.base.app.category.CategoryUpdateRequestDTO;
 import ecom.base.app.response.dtos.ApiResponseDTO;
 
 @RestController
@@ -65,6 +68,46 @@ public class ProductController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
 
+    @GetMapping
+    ResponseEntity<ApiResponseDTO<List<ProductResponseDTO>>> getAllProducts() {
+
+        List<ProductResponseDTO> productResponseDTOs = productService.getAllProducts();
+
+        ApiResponseDTO<List<ProductResponseDTO>> apiResponseDTO = new ApiResponseDTO<>();
+        apiResponseDTO.setData(productResponseDTOs);
+        apiResponseDTO.setMessage("Products fetched");
+
+        return ResponseEntity.ok(apiResponseDTO);
+    }
+
+    @PatchMapping("/{id}")
+    ResponseEntity<ApiResponseDTO<ProductResponseDTO>> patchCategory(@PathVariable Long id) {
+        return ResponseEntity
+                .ok(new ApiResponseDTO<ProductResponseDTO>(
+                        "The status of Product with id: " + id + " set to false",
+                        productService.patchCategory(id)));
+    }
+
+    @PutMapping(value = "/{productId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponseDTO<ProductResponseDTO>> updateProduct(
+            @PathVariable Long productId,
+            @RequestPart("product") ProductUpdateRequestDTO productUpdateRequestDTO,
+            @RequestPart(value = "image", required = false) MultipartFile image) {
+
+        ProductResponseDTO productResponseDTO = productService.updateProduct(
+                productId,
+                productUpdateRequestDTO,
+                image);
+
+        ApiResponseDTO<ProductResponseDTO> apiResponseDTO = new ApiResponseDTO<>();
+
+        apiResponseDTO.setData(productResponseDTO);
+        apiResponseDTO.setMessage("Product updated successfully");
+
+        return ResponseEntity.ok(apiResponseDTO);
+    }
+
+    // Product filteration functionalities
     @GetMapping("/price-range")
     ResponseEntity<ApiResponseDTO<List<ProductResponseDTO>>> getProductsBetweenPriceRange(
             @RequestParam("min") BigDecimal minValue, @RequestParam("max") BigDecimal maxValue) {

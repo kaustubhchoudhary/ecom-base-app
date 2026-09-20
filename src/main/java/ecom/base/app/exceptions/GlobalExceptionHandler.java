@@ -33,9 +33,9 @@ public class GlobalExceptionHandler {
 
         }
 
-        @ExceptionHandler(exception = CategoryAlreadyInactiveException.class)
+        @ExceptionHandler(exception = EntityAlreadyInactiveException.class)
         public ResponseEntity<ApiResponseDTO<Object>> handleCategoryAlreadyInactiveException(
-                        CategoryAlreadyInactiveException exception) {
+                        EntityAlreadyInactiveException exception) {
 
                 ApiResponseDTO<Object> responseDTO = new ApiResponseDTO<Object>(exception.getMessage(), null);
 

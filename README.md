@@ -192,7 +192,48 @@ Make sure the Spring Boot application is running before sending requests.
 
 ````
 
-## 9. Current Status
+## 9. Adding data containing image
+
+### Testing Product Creation API
+
+To test the Product creation API using Postman:
+
+1. Open the `E-Com Base API` collection.
+2. Open the `Products` folder.
+3. Select **Add a Product**.
+4. Set the request method to `POST`.
+5. Set the URL to:
+
+```text
+   {{baseUrl}}/products
+````
+
+6. Select **Body → form-data**.
+
+7. Add a field named `product` with type **Text**.
+
+8. Set the `Content-Type` of the `product` part to:
+
+   ```text
+   application/json
+   ```
+
+9. Enter the Product JSON in the `product` field.
+
+10. Add a field named `image` with type **File**.
+
+11. Select the product image file.
+
+12. Click **Send**.
+
+13. Verify that the API returns `201 Created`.
+
+```
+
+That captures the exact steps someone needs to successfully test your multipart Product API.
+```
+
+## 10. Current Status
 
 The project currently provides the base application structure and the initial Category functionality.
 
@@ -220,4 +261,7 @@ The project can be extended with technologies and concepts such as:
 ```
 
 ```
-````
+
+```
+
+```

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,9 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import ecom.base.app.category.Category;
+import ecom.base.app.category.CategoryMapper;
 import ecom.base.app.category.CategoryRepository;
+import ecom.base.app.category.CategoryResponseDTO;
+import ecom.base.app.category.CategoryUpdateRequestDTO;
+import ecom.base.app.exceptions.EntityAlreadyInactiveException;
 import ecom.base.app.exceptions.DuplicateResourceException;
 import ecom.base.app.exceptions.ResourceNotFoundException;
+import jakarta.transaction.Transactional;
 
 @Service
 public class ProductService {
@@ -84,6 +90,70 @@ public class ProductService {
                         "Product with id : " + productId + " does not exist"));
 
         return product.getImage();
+    }
+
+    List<ProductResponseDTO> getAllProducts() {
+
+        List<Product> productsList = productRepository.findAll();
+
+        return productsList.stream().map(ProductMapper::toProductResponseDTO).toList();
+    }
+
+    @Transactional
+    ProductResponseDTO patchCategory(Long id) {
+
+        Optional<Product> optionalProduct = productRepository.findById(id);
+
+        if (optionalProduct.isEmpty())
+            throw new ResourceNotFoundException("Product with id : " + id + " not found");
+
+        Product product = optionalProduct.get();
+
+        if (!product.getActive())
+            throw new EntityAlreadyInactiveException("Product with id : " + id + " already inactive");
+
+        // product is in transient state, so no need to save again
+        product.setActive(false);
+
+        return ProductMapper.toProductResponseDTO(product);
+
+    }
+
+    public ProductResponseDTO updateProduct(
+            Long productId,
+            ProductUpdateRequestDTO productUpdateRequestDTO,
+            MultipartFile image) {
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product with ID " + productId + " not found"));
+
+        Category category = categoryRepository.findById(productUpdateRequestDTO.getCategoryId())
+                .orElseThrow(() -> new RuntimeException(
+                        "Category with ID " +
+                                productUpdateRequestDTO.getCategoryId() +
+                                " not found"));
+
+        product.setName(productUpdateRequestDTO.getName());
+        product.setDescription(productUpdateRequestDTO.getDescription());
+        product.setPrice(productUpdateRequestDTO.getPrice());
+        product.setQuantity(productUpdateRequestDTO.getQuantity());
+        product.setBrand(productUpdateRequestDTO.getBrand());
+        product.setSpecifications(productUpdateRequestDTO.getSpecifications());
+        product.setActive(productUpdateRequestDTO.getActive());
+
+        product.setCategory(category);
+
+        if (image != null && !image.isEmpty()) {
+            try {
+                product.setImage(image.getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to read product image", e);
+            }
+        }
+
+        Product updatedProduct = productRepository.save(product);
+
+        return ProductMapper.toProductResponseDTO(updatedProduct);
     }
 
     List<ProductResponseDTO> getProductsInPriceRange(BigDecimal min, BigDecimal max) {
