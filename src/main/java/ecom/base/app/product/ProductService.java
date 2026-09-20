@@ -100,23 +100,19 @@ public class ProductService {
     }
 
     @Transactional
-    ProductResponseDTO patchCategory(Long id) {
+    ProductResponseDTO patchProduct(Long id) {
 
         Optional<Product> optionalProduct = productRepository.findById(id);
 
         if (optionalProduct.isEmpty())
-            throw new ResourceNotFoundException("Product with id : " + id + " not found");
+            throw new ResourceNotFoundException(
+                    "Product with id : " + id + " not found");
 
         Product product = optionalProduct.get();
 
-        if (!product.getActive())
-            throw new EntityAlreadyInactiveException("Product with id : " + id + " already inactive");
-
-        // product is in transient state, so no need to save again
-        product.setActive(false);
+        product.setActive(!product.getActive());
 
         return ProductMapper.toProductResponseDTO(product);
-
     }
 
     public ProductResponseDTO updateProduct(

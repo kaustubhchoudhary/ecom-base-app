@@ -82,10 +82,12 @@ public class CategoryController {
         }
 
         @PatchMapping("/{id}")
-        ResponseEntity<ApiResponseDTO<CategoryResponseDTO>> patchCategory(@PathVariable Long id) {
-                return ResponseEntity
-                                .ok(new ApiResponseDTO<CategoryResponseDTO>(
-                                                "The status of Category with id: " + id + " set to false",
+        public ResponseEntity<ApiResponseDTO<CategoryResponseDTO>> patchCategory(
+                        @PathVariable Long id) {
+
+                return ResponseEntity.ok(
+                                new ApiResponseDTO<CategoryResponseDTO>(
+                                                "Category status toggled successfully",
                                                 categoryService.patchCategory(id)));
         }
 
