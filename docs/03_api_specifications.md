@@ -162,16 +162,50 @@ The `data` field can contain additional validation or error information when req
 
 # 8. User APIs
 
+## 8.1 Roles
+
+| Operation  | HTTP Verb | Endpoint          | Meaning              |
+| ---------- | --------- | ----------------- | -------------------- |
+| View All   | GET       | `/roles`          | Get roles            |
+| View By ID | GET       | `/roles/{roleId}` | Get role             |
+| Add        | POST      | `/roles`          | Create role          |
+| Update     | PUT       | `/roles/{roleId}` | Update role          |
+| Deactivate | DELETE    | `/roles/{roleId}` | Set `active = false` |
+
+Sample Role Data:
+
+{
+"name": "ADMIN",
+"description": "Administrator with access to manage the application"
+}
+
+{
+"name": "CUSTOMER",
+"description": "Customer who can browse products and place orders"
+}
+
+## 8.2 Users
+
 ### Business Requirements
 
 - A user should be able to view their own profile.
 - A user should be able to update permitted profile information.
 - The `/me` endpoint represents the currently authenticated user.
 
+| Operation  | HTTP Verb | Endpoint          | Meaning              |
+| ---------- | --------- | ----------------- | -------------------- |
+| View All   | GET       | `/users`          | Get users            |
+| View By ID | GET       | `/users/{userId}` | Get user             |
+| Add        | POST      | `/users`          | Create user          |
+| Update     | PUT       | `/users/{userId}` | Update user          |
+| Deactivate | DELETE    | `/users/{userId}` | Set `active = false` |
+
+Profile Specific APIs
+
 | HTTP Verb | Endpoint    | Status | Expected Response    |
-| --------- | ----------- | -----: | -------------------- |
-| GET       | `/users/me` |    200 | Current user details |
-| PUT       | `/users/me` |    200 | Updated user details |
+| --------- | ----------- | ------ | -------------------- |
+| GET       | `/users/me` | 200    | Current user details |
+| PUT       | `/users/me` | 200    | Updated user details |
 
 ---
 
@@ -185,14 +219,31 @@ The `data` field can contain additional validation or error information when req
 - A category can be deactivated.
 - Products belonging to a category can be retrieved.
 
-| HTTP Verb | Endpoint                            | Status | Expected Response         |
-| --------- | ----------------------------------- | -----: | ------------------------- |
-| GET       | `/categories`                       |    200 | List of categories        |
-| GET       | `/categories/{categoryId}`          |    200 | Category details          |
-| POST      | `/categories`                       |    201 | Added category            |
-| PUT       | `/categories/{categoryId}`          |    200 | Updated category          |
-| PATCH     | `/categories/{categoryId}`          |    204 | No response               |
-| GET       | `/categories/{categoryId}/products` |    200 | List of category products |
+| Operation           | HTTP Verb | Endpoint                            | Status | Expected Response         |
+| ------------------- | --------- | ----------------------------------- | ------ | ------------------------- |
+| View                | GET       | `/categories`                       | 200    | List of categories        |
+| View                | GET       | `/categories/{categoryId}`          | 200    | Category details          |
+| Add                 | POST      | `/categories`                       | 201    | Added category            |
+| Update              | PUT       | `/categories/{categoryId}`          | 200    | Updated category          |
+| Activate/Deactivate | PATCH     | `/categories/{categoryId}`          | 204    | No response               |
+| View                | GET       | `/categories/{categoryId}/products` | 200    | List of category products |
+
+Sample Categories:
+
+{
+"name": "Electronics",
+"description": "Mobiles, laptops, tablets and electronic accessories"
+}
+
+{
+"name": "Clothing",
+"description": "Men's, women's and kids' clothing and fashion products"
+}
+
+{
+"name": "Home & Kitchen",
+"description": "Home appliances, kitchen products and household essentials"
+}
 
 ---
 
@@ -207,13 +258,58 @@ The `data` field can contain additional validation or error information when req
 - Products can be deactivated rather than physically deleted.
 - Inactive products should normally not appear in customer-facing product listings.
 
-| HTTP Verb | Endpoint                | Status | Expected Response |
-| --------- | ----------------------- | -----: | ----------------- |
-| GET       | `/products`             |    200 | List of products  |
-| GET       | `/products/{productId}` |    200 | Product details   |
-| POST      | `/products`             |    201 | Added product     |
-| PUT       | `/products/{productId}` |    200 | Updated product   |
-| DELETE    | `/products/{productId}` |    204 | No response       |
+| Operation           | HTTP Verb | Endpoint                | Status | Expected Response |
+| ------------------- | --------- | ----------------------- | ------ | ----------------- |
+| View                | GET       | `/products`             | 200    | List of products  |
+| View                | GET       | `/products/{productId}` | 200    | Product details   |
+| Add                 | POST      | `/products`             | 201    | Added product     |
+| Update              | PUT       | `/products/{productId}` | 200    | Updated product   |
+| Activate/Deactivate | PATCH     | `/products/{productId}` | 204    | No response       |
+
+Sample Product Data:
+
+{
+"name": "Dell Inspiron 15",
+"description": "15-inch laptop for everyday computing",
+"price": 54999.00,
+"quantity": 10,
+"categoryId": 6,
+"brand": "Dell",
+"specifications": "{\"processor\":\"Intel Core i5\",\"ram\":\"16GB\",\"storage\":\"512GB SSD\",\"display\":\"15.6 inch\",\"operatingSystem\":\"Windows 11\"}",
+"active": true
+}
+
+Image: product_1.png
+
+---
+
+{
+"name": "Samsung Galaxy A",
+"description": "Modern smartphone with AMOLED display",
+"price": 24999.00,
+"quantity": 20,
+"categoryId": 6,
+"brand": "Samsung",
+"specifications": "{\"display\":\"6.5 inch AMOLED\",\"ram\":\"8GB\",\"storage\":\"128GB\",\"camera\":\"50MP\",\"battery\":\"5000mAh\"}",
+"active": true
+}
+
+Image: product_2.png
+
+---
+
+{
+"name": "Bose QuietComfort",
+"description": "Wireless noise cancelling headphones",
+"price": 29999.00,
+"quantity": 15,
+"categoryId": 6,
+"brand": "Bose",
+"specifications": "{\"type\":\"Wireless\",\"noiseCancellation\":true,\"connectivity\":\"Bluetooth\",\"batteryLife\":\"24 hours\",\"microphone\":true}",
+"active": true
+}
+
+Image: product_3.png
 
 ---
 
