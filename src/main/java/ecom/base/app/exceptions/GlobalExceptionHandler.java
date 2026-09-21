@@ -10,6 +10,20 @@ import ecom.base.app.response.dtos.ApiResponseDTO;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+        @ExceptionHandler(ResourceAlreadyExistsException.class)
+        public ResponseEntity<ApiResponseDTO<Void>> handleResourceAlreadyExists(
+                        ResourceAlreadyExistsException ex) {
+
+                ApiResponseDTO<Void> response = new ApiResponseDTO<>();
+
+                response.setMessage(ex.getMessage());
+                response.setData(null);
+
+                return ResponseEntity
+                                .status(HttpStatus.CONFLICT)
+                                .body(response);
+        }
+
         @ExceptionHandler(exception = ResourceNotFoundException.class)
         public ResponseEntity<ApiResponseDTO<Object>> handleResourceNotFoundException(ResourceNotFoundException ex) {
 

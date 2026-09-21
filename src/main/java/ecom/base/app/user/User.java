@@ -1,44 +1,50 @@
-// package ecom.base.app.user;
+package ecom.base.app.user;
 
-// import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 
-// import ecom.base.app.role.Role;
-// import jakarta.persistence.*;
-// import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-// @Entity
-// @Table(name = "users")
-// @Data
-// @NoArgsConstructor
-// @AllArgsConstructor
-// public class User {
+import ecom.base.app.role.Role;
+import jakarta.persistence.*;
+import lombok.*;
 
-// @Id
-// @GeneratedValue(strategy = GenerationType.IDENTITY)
-// private Long id;
+@Entity
+@Table(name = "users")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class User {
 
-// @Column(nullable = false)
-// private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Long id;
 
-// @Column(nullable = false, unique = true)
-// private String email;
+    @Column(nullable = false, length = 50)
+    private String name;
 
-// @Column(nullable = false)
-// private String password;
+    @Column(nullable = false, unique = true, length = 50)
+    private String email;
 
-// @Column(nullable = false)
-// private String phone;
+    @Column(nullable = false, length = 60)
+    private String password;
 
-// @ManyToOne(fetch = FetchType.EAGER)
-// @JoinColumn(name = "role_id", nullable = false)
-// private Role role;
+    @Column(nullable = false, unique = true, length = 15)
+    private String phone;
 
-// @Column(nullable = false)
-// private Boolean active;
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 
-// @Column(nullable = false)
-// private LocalDateTime createdAt;
+    @Column(nullable = false)
+    private Boolean active;
 
-// @Column(nullable = false)
-// private LocalDateTime updatedAt;
-// }
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+}

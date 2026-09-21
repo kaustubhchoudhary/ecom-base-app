@@ -378,6 +378,117 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Add a User",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "// {\r\n// \"name\": \"Rahul Sharma\",\r\n// \"email\": \"rahul.sharma@example.com\",\r\n// \"password\": \"Admin@123\",\r\n// \"phone\": \"9876543210\",\r\n// \"roleId\": 1\r\n// }\r\n\r\n// {\r\n// \"name\": \"Priya Verma\",\r\n// \"email\": \"priya.verma@example.com\",\r\n// \"password\": \"Customer@123\",\r\n// \"phone\": \"9876543211\",\r\n// \"roleId\": 2\r\n// }\r\n\r\n// {\r\n// \"name\": \"Amit Patel\",\r\n// \"email\": \"amit.patel@example.com\",\r\n// \"password\": \"Customer@456\",\r\n// \"phone\": \"9876543212\",\r\n// \"roleId\": 2\r\n// }\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get a User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "{{userId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update current User",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"name\": \"Priya Verma\",\r\n\"email\": \"priya.verma@example.com\",\r\n\"password\": \"Customer@123\",\r\n\"phone\": \"9875543212\",\r\n\"roleId\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "{{userId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Toggle Active Status",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "{{userId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "variable": [

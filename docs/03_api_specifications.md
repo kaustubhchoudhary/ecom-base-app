@@ -207,6 +207,32 @@ Profile Specific APIs
 | GET       | `/users/me` | 200    | Current user details |
 | PUT       | `/users/me` | 200    | Updated user details |
 
+Sample User data:
+
+{
+"name": "Rahul Sharma",
+"email": "rahul.sharma@example.com",
+"password": "Admin@123",
+"phone": "9876543210",
+"roleId": 1
+}
+
+{
+"name": "Priya Verma",
+"email": "priya.verma@example.com",
+"password": "Customer@123",
+"phone": "9876543211",
+"roleId": 2
+}
+
+{
+"name": "Amit Patel",
+"email": "amit.patel@example.com",
+"password": "Customer@456",
+"phone": "9876543212",
+"roleId": 2
+}
+
 ---
 
 # 9. Category APIs
