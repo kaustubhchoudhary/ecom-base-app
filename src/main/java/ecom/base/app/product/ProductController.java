@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import ecom.base.app.category.CategoryResponseDTO;
-import ecom.base.app.category.CategoryUpdateRequestDTO;
 import ecom.base.app.response.dtos.ApiResponseDTO;
 
 @RestController

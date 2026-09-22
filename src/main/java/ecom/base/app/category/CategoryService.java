@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import ecom.base.app.exceptions.EntityAlreadyInactiveException;
 import ecom.base.app.exceptions.DuplicateResourceException;
 import ecom.base.app.exceptions.ResourceNotFoundException;
 import ecom.base.app.product.Product;

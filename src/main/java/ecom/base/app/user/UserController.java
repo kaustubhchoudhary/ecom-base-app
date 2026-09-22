@@ -6,87 +6,105 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import ecom.base.app.orders.OrderResponseDTO;
+import ecom.base.app.orders.OrderService;
 import ecom.base.app.response.dtos.ApiResponseDTO;
 
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
 
-    private final UserService userService;
+        private final UserService userService;
+        private final OrderService orderService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+        public UserController(UserService userService, OrderService orderService) {
+                this.userService = userService;
+                this.orderService = orderService;
+        }
 
-    @GetMapping
-    public ResponseEntity<ApiResponseDTO<List<UserResponseDTO>>> getAllUsers() {
+        @GetMapping
+        public ResponseEntity<ApiResponseDTO<List<UserResponseDTO>>> getAllUsers() {
 
-        return ResponseEntity.ok(
-                new ApiResponseDTO<List<UserResponseDTO>>(
-                        "Users fetched successfully",
-                        userService.getAllUsers()));
-    }
+                return ResponseEntity.ok(
+                                new ApiResponseDTO<List<UserResponseDTO>>(
+                                                "Users fetched successfully",
+                                                userService.getAllUsers()));
+        }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseDTO<UserResponseDTO>> getUserById(
-            @PathVariable Long id) {
+        @GetMapping("/{id}")
+        public ResponseEntity<ApiResponseDTO<UserResponseDTO>> getUserById(
+                        @PathVariable Long id) {
 
-        return ResponseEntity.ok(
-                new ApiResponseDTO<UserResponseDTO>(
-                        "User fetched successfully",
-                        userService.getUserById(id)));
-    }
+                return ResponseEntity.ok(
+                                new ApiResponseDTO<UserResponseDTO>(
+                                                "User fetched successfully",
+                                                userService.getUserById(id)));
+        }
 
-    @PostMapping
-    public ResponseEntity<ApiResponseDTO<UserResponseDTO>> addUser(
-            @RequestBody UserRequestDTO userRequestDTO) {
+        @PostMapping
+        public ResponseEntity<ApiResponseDTO<UserResponseDTO>> addUser(
+                        @RequestBody UserRequestDTO userRequestDTO) {
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(
-                        new ApiResponseDTO<UserResponseDTO>(
-                                "User added successfully",
-                                userService.addUser(userRequestDTO)));
-    }
+                return ResponseEntity.status(HttpStatus.CREATED)
+                                .body(
+                                                new ApiResponseDTO<UserResponseDTO>(
+                                                                "User added successfully",
+                                                                userService.addUser(userRequestDTO)));
+        }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseDTO<UserResponseDTO>> updateUser(
-            @PathVariable Long id,
-            @RequestBody UserRequestDTO userRequestDTO) {
+        @PutMapping("/{id}")
+        public ResponseEntity<ApiResponseDTO<UserResponseDTO>> updateUser(
+                        @PathVariable Long id,
+                        @RequestBody UserRequestDTO userRequestDTO) {
 
-        return ResponseEntity.ok(
-                new ApiResponseDTO<UserResponseDTO>(
-                        "User updated successfully",
-                        userService.updateUser(id, userRequestDTO)));
-    }
+                return ResponseEntity.ok(
+                                new ApiResponseDTO<UserResponseDTO>(
+                                                "User updated successfully",
+                                                userService.updateUser(id, userRequestDTO)));
+        }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<ApiResponseDTO<UserResponseDTO>> toggleUserStatus(
-            @PathVariable Long id) {
+        @PatchMapping("/{id}")
+        public ResponseEntity<ApiResponseDTO<UserResponseDTO>> toggleUserStatus(
+                        @PathVariable Long id) {
 
-        return ResponseEntity.ok(
-                new ApiResponseDTO<UserResponseDTO>(
-                        "User status toggled successfully",
-                        userService.toggleUserStatus(id)));
-    }
+                return ResponseEntity.ok(
+                                new ApiResponseDTO<UserResponseDTO>(
+                                                "User status toggled successfully",
+                                                userService.toggleUserStatus(id)));
+        }
 
-    @GetMapping("/me")
-    public ResponseEntity<ApiResponseDTO<UserResponseDTO>> getCurrentUser(
-            @RequestParam Long id) {
+        @GetMapping("/me")
+        public ResponseEntity<ApiResponseDTO<UserResponseDTO>> getCurrentUser(
+                        @RequestParam Long id) {
 
-        return ResponseEntity.ok(
-                new ApiResponseDTO<UserResponseDTO>(
-                        "Current user fetched successfully",
-                        userService.getCurrentUser(id)));
-    }
+                return ResponseEntity.ok(
+                                new ApiResponseDTO<UserResponseDTO>(
+                                                "Current user fetched successfully",
+                                                userService.getCurrentUser(id)));
+        }
 
-    @PutMapping("/me")
-    public ResponseEntity<ApiResponseDTO<UserResponseDTO>> updateCurrentUser(
-            @RequestParam Long id,
-            @RequestBody UserRequestDTO userRequestDTO) {
+        @PutMapping("/me")
+        public ResponseEntity<ApiResponseDTO<UserResponseDTO>> updateCurrentUser(
+                        @RequestParam Long id,
+                        @RequestBody UserRequestDTO userRequestDTO) {
 
-        return ResponseEntity.ok(
-                new ApiResponseDTO<UserResponseDTO>(
-                        "Current user updated successfully",
-                        userService.updateCurrentUser(id, userRequestDTO)));
-    }
+                return ResponseEntity.ok(
+                                new ApiResponseDTO<UserResponseDTO>(
+                                                "Current user updated successfully",
+                                                userService.updateCurrentUser(id, userRequestDTO)));
+        }
+
+        @GetMapping("/{userId}/orders")
+        public ResponseEntity<ApiResponseDTO<List<OrderResponseDTO>>> getUserOrders(
+                        @PathVariable Long userId) {
+
+                List<OrderResponseDTO> orders = orderService.getOrdersByUser(userId);
+
+                ApiResponseDTO<List<OrderResponseDTO>> response = new ApiResponseDTO<>();
+
+                response.setMessage("Customer orders fetched successfully");
+                response.setData(orders);
+
+                return ResponseEntity.ok(response);
+        }
 }
