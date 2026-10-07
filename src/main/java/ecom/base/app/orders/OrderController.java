@@ -7,16 +7,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import ecom.base.app.response.dtos.ApiResponseDTO;
+import ecom.base.app.transactions.TransactionResponseDTO;
+import ecom.base.app.transactions.TransactionService;
 import ecom.base.app.orderitems.OrderItemResponseDTO;
+import ecom.base.app.payments.PaymentRequestDTO;
+import ecom.base.app.payments.PaymentResponseDTO;
+import ecom.base.app.payments.PaymentService;
 
 @RestController
 @RequestMapping("/api/v1/orders")
 public class OrderController {
 
     private final OrderService orderService;
+    private final PaymentService paymentService;
+    private final TransactionService transactionService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, PaymentService paymentService,
+            TransactionService transactionService) {
         this.orderService = orderService;
+        this.paymentService = paymentService;
+        this.transactionService = transactionService;
     }
 
     @PostMapping
@@ -75,6 +85,47 @@ public class OrderController {
         ApiResponseDTO<OrderResponseDTO> response = new ApiResponseDTO<>();
 
         response.setMessage("Order status updated successfully");
+        response.setData(responseDTO);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{orderId}/payment")
+    public ResponseEntity<ApiResponseDTO<PaymentResponseDTO>> createPayment(
+            @PathVariable Long orderId,
+            @RequestBody PaymentRequestDTO requestDTO) {
+
+        PaymentResponseDTO responseDTO = paymentService.createPayment(orderId, requestDTO);
+
+        ApiResponseDTO<PaymentResponseDTO> response = new ApiResponseDTO<>();
+        response.setMessage("Payment created successfully");
+        response.setData(responseDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/{orderId}/payment")
+    public ResponseEntity<ApiResponseDTO<PaymentResponseDTO>> getOrderPayment(
+            @PathVariable Long orderId) {
+
+        PaymentResponseDTO responseDTO = paymentService.getPaymentByOrderId(orderId);
+
+        ApiResponseDTO<PaymentResponseDTO> response = new ApiResponseDTO<>();
+        response.setMessage("Payment fetched successfully");
+        response.setData(responseDTO);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{orderId}/transactions")
+    public ResponseEntity<ApiResponseDTO<List<TransactionResponseDTO>>> getOrderTransactions(
+            @PathVariable Long orderId) {
+
+        List<TransactionResponseDTO> responseDTO = transactionService.getTransactionsByOrderId(orderId);
+
+        ApiResponseDTO<List<TransactionResponseDTO>> response = new ApiResponseDTO<>();
+
+        response.setMessage("Order transactions fetched successfully");
         response.setData(responseDTO);
 
         return ResponseEntity.ok(response);

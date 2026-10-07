@@ -3,7 +3,7 @@ package ecom.base.app.product;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import ecom.base.app.category.CategorySummaryDTO;
+import ecom.base.app.categories.CategorySummaryDTO;
 import lombok.Data;
 
 @Data

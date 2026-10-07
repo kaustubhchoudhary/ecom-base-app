@@ -1,4 +1,4 @@
-package ecom.base.app.category;
+package ecom.base.app.categories;
 
 import java.util.List;
 import java.util.Optional;

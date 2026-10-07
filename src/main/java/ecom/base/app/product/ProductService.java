@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import ecom.base.app.category.Category;
-import ecom.base.app.category.CategoryRepository;
-
+import ecom.base.app.categories.Category;
+import ecom.base.app.categories.CategoryRepository;
 import ecom.base.app.exceptions.DuplicateResourceException;
 import ecom.base.app.exceptions.ResourceNotFoundException;
 import jakarta.transaction.Transactional;

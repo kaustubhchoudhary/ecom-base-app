@@ -1,12 +1,3 @@
-Yes. For **Document 3**, save it as:
-
-```text
-docs/03_api_specifications.md
-```
-
-Below is the Markdown conversion of your uploaded API Specification, preserving its structure and content.
-
-````markdown
 # Document 3 - API Specifications
 
 ## Mini E-Commerce Application
@@ -45,6 +36,7 @@ All APIs use the following base path:
 ```text
 /api/v1
 ```
+
 ````
 
 Therefore, the endpoints in this document are written relative to:
@@ -81,15 +73,15 @@ is represented in the tables as:
 
 # 4. Standard Response Status Codes
 
-- **200 - OK:** Request processed successfully.
-- **201 - Created:** New resource created successfully.
-- **204 - No Content:** Request processed successfully with no response body.
-- **400 - Bad Request:** Invalid request or validation failure.
-- **401 - Unauthorized:** Authentication is required.
-- **403 - Forbidden:** User is authenticated but not authorized.
-- **404 - Not Found:** Requested resource does not exist.
-- **409 - Conflict:** Request conflicts with existing data or a business rule.
-- **500 - Internal Server Error:** Unexpected server-side error.
+- *200 - OK:* Request processed successfully.
+- *201 - Created:* New resource created successfully.
+- *204 - No Content:* Request processed successfully with no response body.
+- *400 - Bad Request:* Invalid request or validation failure.
+- *401 - Unauthorized:* Authentication is required.
+- *403 - Forbidden:* User is authenticated but not authorized.
+- *404 - Not Found:* Requested resource does not exist.
+- *409 - Conflict:* Request conflicts with existing data or a business rule.
+- *500 - Internal Server Error:* Unexpected server-side error.
 
 ---
 
@@ -132,8 +124,6 @@ Application errors should follow a consistent structure.
 
 ```json
 {
-  "statusCode": 404,
-  "statusMessage": "Not Found",
   "message": "Product with ID 101 not found",
   "data": null
 }
@@ -158,6 +148,11 @@ The `data` field can contain additional validation or error information when req
 | POST      | `/auth/login`    |    200 | Authenticated user/session information |
 | POST      | `/auth/logout`   |    204 | No response                            |
 
+* Note that
+- register, login and logout are here only for reference.
+- They are not implemented in this project
+- You can implement them as a part of your learning of Spring Security
+
 ---
 
 # 8. User APIs
@@ -174,10 +169,16 @@ The `data` field can contain additional validation or error information when req
 
 Sample Role Data:
 
+API End Point - POST: /api/v1/roles
+
+Role 1:
+
 {
 "name": "ADMIN",
 "description": "Administrator with access to manage the application"
 }
+
+Role 2:
 
 {
 "name": "CUSTOMER",
@@ -209,6 +210,10 @@ Profile Specific APIs
 
 Sample User data:
 
+API End Point - POST: /api/v1/users
+
+User 1: Admin
+
 {
 "name": "Rahul Sharma",
 "email": "rahul.sharma@example.com",
@@ -217,6 +222,8 @@ Sample User data:
 "roleId": 1
 }
 
+User 2: Customer 1
+
 {
 "name": "Priya Verma",
 "email": "priya.verma@example.com",
@@ -224,6 +231,8 @@ Sample User data:
 "phone": "9876543211",
 "roleId": 2
 }
+
+User 3: Customer 2
 
 {
 "name": "Amit Patel",
@@ -256,15 +265,23 @@ Sample User data:
 
 Sample Categories:
 
+API End Point - POST: /api/v1/categories
+
+Category 1:
+
 {
 "name": "Electronics",
 "description": "Mobiles, laptops, tablets and electronic accessories"
 }
 
+Category 2:
+
 {
 "name": "Clothing",
 "description": "Men's, women's and kids' clothing and fashion products"
 }
+
+Category 3:
 
 {
 "name": "Home & Kitchen",
@@ -292,48 +309,107 @@ Sample Categories:
 | Update              | PUT       | `/products/{productId}` | 200    | Updated product   |
 | Activate/Deactivate | PATCH     | `/products/{productId}` | 204    | No response       |
 
-Sample Product Data:
+Sample Product Data (All for Category  - 'Electronics'):
 
-{
-"name": "Dell Inspiron 15",
-"description": "15-inch laptop for everyday computing",
-"price": 54999.00,
-"quantity": 10,
-"categoryId": 6,
-"brand": "Dell",
-"specifications": "{\"processor\":\"Intel Core i5\",\"ram\":\"16GB\",\"storage\":\"512GB SSD\",\"display\":\"15.6 inch\",\"operatingSystem\":\"Windows 11\"}",
-"active": true
-}
+API End Point - POST: /api/v1/products
 
-Image: product_1.png
+----
+
+### Testing Product Creation API
+
+To test the Product creation API using Postman:
+
+1. Open the `E-Com Base API` collection.
+2. Open the `Products` folder.
+3. Select *Add a Product*.
+4. Set the request method to `POST`.
+5. Set the URL to:
+
+```text
+   {{baseUrl}}/products
+````
+
+6. Select _Body → form-data_.
+
+7. Add a field named `product` with type _Text_.
+
+8. Set the `Content-Type` of the `product` part to:
+
+   ```text
+   application/json
+   ```
+
+9. Enter the Product JSON in the `product` field.
+
+10. Add a field named `image` with type _File_.
+
+11. Select the product image file.
+
+12. Click _Send_.
+
+13. Verify that the API returns `201 Created`.
+
+```
+
+That captures the exact steps someone needs to successfully test your multipart Product API.
+```
 
 ---
 
+Product 1 - Category 1:
+
+```json
 {
-"name": "Samsung Galaxy A",
-"description": "Modern smartphone with AMOLED display",
-"price": 24999.00,
-"quantity": 20,
-"categoryId": 6,
-"brand": "Samsung",
-"specifications": "{\"display\":\"6.5 inch AMOLED\",\"ram\":\"8GB\",\"storage\":\"128GB\",\"camera\":\"50MP\",\"battery\":\"5000mAh\"}",
-"active": true
+  "name": "Dell Inspiron 15",
+  "description": "15-inch laptop for everyday computing",
+  "price": 54999.0,
+  "quantity": 10,
+  "categoryId": 1,
+  "brand": "Dell",
+  "specifications": "{\"processor\":\"Intel Core i5\",\"ram\":\"16GB\",\"storage\":\"512GB SSD\",\"display\":\"15.6 inch\",\"operatingSystem\":\"Windows 11\"}",
+  "active": true
 }
+```
+
+Image: product_1.png
+
+- find the images in folder `product_images` in project root
+
+---
+
+Product 2 - Category 1:
+
+```json
+{
+  "name": "Samsung Galaxy A",
+  "description": "Modern smartphone with AMOLED display",
+  "price": 24999.0,
+  "quantity": 20,
+  "categoryId": 1,
+  "brand": "Samsung",
+  "specifications": "{\"display\":\"6.5 inch AMOLED\",\"ram\":\"8GB\",\"storage\":\"128GB\",\"camera\":\"50MP\",\"battery\":\"5000mAh\"}",
+  "active": true
+}
+```
 
 Image: product_2.png
 
 ---
 
+Product 3 - Category 1:
+
+```json
 {
-"name": "Bose QuietComfort",
-"description": "Wireless noise cancelling headphones",
-"price": 29999.00,
-"quantity": 15,
-"categoryId": 6,
-"brand": "Bose",
-"specifications": "{\"type\":\"Wireless\",\"noiseCancellation\":true,\"connectivity\":\"Bluetooth\",\"batteryLife\":\"24 hours\",\"microphone\":true}",
-"active": true
+  "name": "Bose QuietComfort",
+  "description": "Wireless noise cancelling headphones",
+  "price": 29999.0,
+  "quantity": 15,
+  "categoryId": 1,
+  "brand": "Bose",
+  "specifications": "{\"type\":\"Wireless\",\"noiseCancellation\":true,\"connectivity\":\"Bluetooth\",\"batteryLife\":\"24 hours\",\"microphone\":true}",
+  "active": true
 }
+```
 
 Image: product_3.png
 
@@ -366,12 +442,14 @@ When an order is created, the server should:
 - Create the order items.
 - Update available product quantity.
 
-| HTTP Verb | Endpoint                  | Status | Expected Response         |
-| --------- | ------------------------- | -----: | ------------------------- |
-| POST      | `/orders`                 |    201 | Created order             |
-| GET       | `/orders`                 |    200 | List of customer's orders |
-| GET       | `/orders/{orderId}`       |    200 | Order details             |
-| GET       | `/orders/{orderId}/items` |    200 | List of order items       |
+| Action               | HTTP Verb | Endpoint                         | Status | Expected Response             |
+| -------------------- | --------- | -------------------------------- | -----: | ----------------------------- |
+| Create Order         | POST      | `/orders`                        |    201 | Created order                 |
+| View Customer Orders | GET       | `/users/{userId}/orders`         |    200 | List of customer's orders     |
+| View Order           | GET       | `/orders/{orderId}`              |    200 | Order details                 |
+| View Order Items     | GET       | `/orders/{orderId}/items`        |    200 | List of order items           |
+| Change Order Status  | PATCH     | `/orders/{orderId}/status`       |    200 | Updated order with new status |
+| Cancel Order         | POST      | `/orders/{orderId}/cancellation` |    201 | Cancellation details          |
 
 ---
 
@@ -388,9 +466,88 @@ They are created as part of order creation rather than through an independent cr
 - The `unitPrice` should represent the product price at the time of purchase.
 - Order items should be retrieved through their parent order.
 
-| HTTP Verb | Endpoint                  | Status | Expected Response   |
-| --------- | ------------------------- | -----: | ------------------- |
-| GET       | `/orders/{orderId}/items` |    200 | List of order items |
+| Action               | HTTP Verb | Endpoint                         | Status | Expected Response             |
+| -------------------- | --------- | -------------------------------- | -----: | ----------------------------- |
+| Create Order         | POST      | `/orders`                        |    201 | Created order                 |
+| View Customer Orders | GET       | `/users/{userId}/orders`         |    200 | List of customer's orders     |
+| View Order           | GET       | `/orders/{orderId}`              |    200 | Order details                 |
+| View Order Items     | GET       | `/orders/{orderId}/items`        |    200 | List of order items           |
+| Change Order Status  | PATCH     | `/orders/{orderId}/status`       |    200 | Updated order with new status |
+| Cancel Order         | POST      | `/orders/{orderId}/cancellation` |    201 | Cancellation details          |
+
+Sample Data Orders
+
+API End Point - POST: /api/v1/orders
+
+Order 1:
+
+```json
+Sample Data Orders
+
+API End Point - POST: /api/v1/orders
+
+Order 1:
+
+{
+    "userId": 2,
+    "items": [
+        {
+            "productId": 1,
+            "quantity": 2
+        },
+        {
+            "productId": 2,
+            "quantity": 1
+        }
+    ]
+}
+
+Order 2:
+
+{
+    "userId": 3,
+    "items": [
+        {
+            "productId": 2,
+            "quantity": 2
+        },
+        {
+            "productId": 3,
+            "quantity": 1
+        }
+    ]
+}
+
+Order 3:
+
+{
+    "userId": 2,
+    "items": [
+        {
+            "productId": 1,
+            "quantity": 1
+        },
+        {
+            "productId": 3,
+            "quantity": 3
+        }
+    ]
+}
+
+Change Order Status
+
+{
+    "status": "CONFIRMED"
+}
+```
+
+Change Order Status
+
+```json
+{
+  "status": "CONFIRMED"
+}
+```
 
 ---
 
@@ -418,6 +575,27 @@ They are created as part of order creation rather than through an independent cr
 | --------- | --------------------------- | -----: | ----------------- |
 | POST      | `/orders/{orderId}/payment` |    201 | Created payment   |
 | GET       | `/orders/{orderId}/payment` |    200 | Payment details   |
+
+Sample Payment Data:
+
+API End Point - POST: /api/v1/orders/1/payments
+
+```
+OrderId: 1
+ {
+ "paymentMethod": "UPI"
+ }
+
+ OrderId: 2
+ {
+ "paymentMethod": "COD"
+ }
+
+ OrderId: 3
+{
+"paymentMethod": "WALLET"
+}
+```
 
 ---
 

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ecom.base.app.category.CategoryMapper;
-import ecom.base.app.category.CategorySummaryDTO;
+import ecom.base.app.categories.CategoryMapper;
+import ecom.base.app.categories.CategorySummaryDTO;
 
 public class ProductMapper {
 

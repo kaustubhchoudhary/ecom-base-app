@@ -8,7 +8,11 @@ import org.springframework.web.bind.annotation.*;
 
 import ecom.base.app.orders.OrderResponseDTO;
 import ecom.base.app.orders.OrderService;
+import ecom.base.app.payments.PaymentResponseDTO;
+import ecom.base.app.payments.PaymentService;
 import ecom.base.app.response.dtos.ApiResponseDTO;
+import ecom.base.app.transactions.TransactionResponseDTO;
+import ecom.base.app.transactions.TransactionService;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -16,10 +20,15 @@ public class UserController {
 
         private final UserService userService;
         private final OrderService orderService;
+        private final PaymentService paymentService;
+        private final TransactionService transactionService;
 
-        public UserController(UserService userService, OrderService orderService) {
+        public UserController(UserService userService, OrderService orderService, PaymentService paymentService,
+                        TransactionService transactionService) {
                 this.userService = userService;
                 this.orderService = orderService;
+                this.paymentService = paymentService;
+                this.transactionService = transactionService;
         }
 
         @GetMapping
@@ -104,6 +113,34 @@ public class UserController {
 
                 response.setMessage("Customer orders fetched successfully");
                 response.setData(orders);
+
+                return ResponseEntity.ok(response);
+        }
+
+        @GetMapping("/{userId}/payments")
+        public ResponseEntity<ApiResponseDTO<List<PaymentResponseDTO>>> getUserPayments(
+                        @PathVariable Long userId) {
+
+                List<PaymentResponseDTO> responseDTO = paymentService.getPaymentsByUserId(userId);
+
+                ApiResponseDTO<List<PaymentResponseDTO>> response = new ApiResponseDTO<>();
+
+                response.setMessage("Payment history fetched successfully");
+                response.setData(responseDTO);
+
+                return ResponseEntity.ok(response);
+        }
+
+        @GetMapping("/{userId}/transactions")
+        public ResponseEntity<ApiResponseDTO<List<TransactionResponseDTO>>> getUserTransactions(
+                        @PathVariable Long userId) {
+
+                List<TransactionResponseDTO> responseDTO = transactionService.getTransactionsByUserId(userId);
+
+                ApiResponseDTO<List<TransactionResponseDTO>> response = new ApiResponseDTO<>();
+
+                response.setMessage("Transaction history fetched successfully");
+                response.setData(responseDTO);
 
                 return ResponseEntity.ok(response);
         }
