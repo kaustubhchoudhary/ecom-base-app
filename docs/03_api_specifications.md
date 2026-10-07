@@ -147,10 +147,9 @@ The `data` field can contain additional validation or error information when req
 | POST      | `/auth/logout`   |    204 | No response                            |
 
 - Note that
-
-* register, login and logout are here only for reference.
-* They are not implemented in this project
-* You can implement them as a part of your learning of Spring Security
+  - `register, login and logout are here only for reference.`
+  - `They are not implemented in this project`
+  - `You can implement them as a part of your learning of Spring Security`
 
 ---
 
