@@ -380,7 +380,7 @@ That captures the exact steps someone needs to successfully test your multipart 
 }
 ```
 
-Image: product_1.png
+**Image:** `product_1.png`
 
 - find the images in folder `product_images` in project root
 
@@ -401,7 +401,7 @@ Image: product_1.png
 }
 ```
 
-Image: product_2.png
+**Image:** `product_2.png`
 
 ---
 
@@ -420,7 +420,7 @@ Image: product_2.png
 }
 ```
 
-Image: product_3.png
+**Image:** `product_3.png`
 
 ---
 
