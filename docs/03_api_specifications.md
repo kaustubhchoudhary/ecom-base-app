@@ -133,7 +133,7 @@ The `data` field can contain additional validation or error information when req
 
 # 7. Authentication APIs
 
-### Business Requirements
+## Business Requirements
 
 - A new customer should be able to register.
 - A registered user should be able to login.
@@ -166,7 +166,7 @@ The `data` field can contain additional validation or error information when req
 | Update     | PUT       | `/roles/{roleId}` | Update role          |
 | Deactivate | DELETE    | `/roles/{roleId}` | Set `active = false` |
 
-Sample Role Data:
+### Sample Role Data:
 
 API End Point - POST: /api/v1/roles
 
@@ -211,7 +211,7 @@ Profile Specific APIs
 | GET       | `/users/me` | 200    | Current user details |
 | PUT       | `/users/me` | 200    | Updated user details |
 
-Sample User data:
+### Sample User data:
 
 API End Point - POST: /api/v1/users
 
@@ -255,7 +255,7 @@ User 3: Customer 2
 
 # 9. Category APIs
 
-### Business Requirements
+## Business Requirements
 
 - Categories are used to organize products.
 - A category can be created.
@@ -272,7 +272,7 @@ User 3: Customer 2
 | Activate/Deactivate | PATCH     | `/categories/{categoryId}`          | 204    | No response               |
 | View                | GET       | `/categories/{categoryId}/products` | 200    | List of category products |
 
-Sample Categories:
+### Sample Categories:
 
 API End Point - POST: /api/v1/categories
 
@@ -307,7 +307,7 @@ Category 3:
 
 # 10. Product APIs
 
-### Business Requirements
+## Business Requirements
 
 - Products should be available for browsing.
 - A particular product should be retrievable using its ID.
@@ -323,12 +323,6 @@ Category 3:
 | Add                 | POST      | `/products`             | 201    | Added product     |
 | Update              | PUT       | `/products/{productId}` | 200    | Updated product   |
 | Activate/Deactivate | PATCH     | `/products/{productId}` | 204    | No response       |
-
-Sample Product Data (All for Category - 'Electronics'):
-
-API End Point - POST: /api/v1/products
-
----
 
 ### Testing Product Creation API
 
@@ -367,6 +361,10 @@ To test the Product creation API using Postman:
 That captures the exact steps someone needs to successfully test your multipart Product API.
 
 ---
+
+### Sample Products' Data (Only for Category - 'Electronics'):
+
+API End Point - POST: /api/v1/products
 
 Product 1 - Category 1:
 
@@ -429,7 +427,7 @@ Image: product_3.png
 
 # 11. Order APIs
 
-### Business Requirements
+## Business Requirements
 
 - A customer should be able to create an order.
 - An order contains one or more products.
@@ -471,7 +469,7 @@ Order items are dependent on an order.
 
 They are created as part of order creation rather than through an independent create API.
 
-### Business Requirements
+## Business Requirements
 
 - An order should contain one or more order items.
 - Each order item represents a product purchased in an order.
@@ -487,13 +485,7 @@ They are created as part of order creation rather than through an independent cr
 | Change Order Status  | PATCH     | `/orders/{orderId}/status`       |    200 | Updated order with new status |
 | Cancel Order         | POST      | `/orders/{orderId}/cancellation` |    201 | Cancellation details          |
 
-Sample Data Orders
-
-API End Point - POST: /api/v1/orders
-
-Order 1:
-
-Sample Data Orders
+### Sample Data Orders
 
 API End Point - POST: /api/v1/orders
 
@@ -551,7 +543,9 @@ Order 3:
 }
 ```
 
-Change Order Status
+### Change Order Status
+
+Order 1:
 
 ```json
 {
@@ -559,7 +553,7 @@ Change Order Status
 }
 ```
 
-Change Order Status
+Order 2:
 
 ```json
 {
@@ -571,7 +565,7 @@ Change Order Status
 
 # 13. Payment APIs
 
-### Business Requirements
+## Business Requirements
 
 - A customer should be able to initiate payment for an order.
 - Payment is simulated in this project.
@@ -594,7 +588,7 @@ Change Order Status
 | POST      | `/orders/{orderId}/payment` |    201 | Created payment   |
 | GET       | `/orders/{orderId}/payment` |    200 | Payment details   |
 
-Sample Payment Data:
+### Sample Payment Data:
 
 API End Point - POST: /api/v1/orders/1/payments
 
@@ -633,7 +627,7 @@ Transactions can represent activities such as:
 - Payment
 - Refund
 
-### Business Requirements
+## Business Requirements
 
 - Transaction information should be associated with a payment.
 - A transaction should contain the transaction amount.
@@ -648,7 +642,7 @@ Transactions can represent activities such as:
 
 # 15. Cancellation APIs
 
-### Business Requirements
+## Business Requirements
 
 - A customer should be able to request cancellation of an order when permitted.
 - An order can have zero or one cancellation record.
@@ -657,9 +651,9 @@ Transactions can represent activities such as:
 - Cancellation rules will be handled by the business/service layer.
 
 | HTTP Verb | Endpoint                         | Status | Expected Response            |
-| --------- | -------------------------------- | -----: | ---------------------------- |
-| POST      | `/orders/{orderId}/cancellation` |    201 | Created cancellation request |
-| GET       | `/orders/{orderId}/cancellation` |    200 | Cancellation details         |
+| --------- | -------------------------------- | ------ | ---------------------------- |
+| POST      | `/orders/{orderId}/cancellation` | 201    | Created cancellation request |
+| GET       | `/orders/{orderId}/cancellation` | 200    | Cancellation details         |
 
 ---
 
