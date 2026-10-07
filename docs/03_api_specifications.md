@@ -37,8 +37,6 @@ All APIs use the following base path:
 /api/v1
 ```
 
-````
-
 Therefore, the endpoints in this document are written relative to:
 
 ```text
@@ -73,15 +71,15 @@ is represented in the tables as:
 
 # 4. Standard Response Status Codes
 
-- *200 - OK:* Request processed successfully.
-- *201 - Created:* New resource created successfully.
-- *204 - No Content:* Request processed successfully with no response body.
-- *400 - Bad Request:* Invalid request or validation failure.
-- *401 - Unauthorized:* Authentication is required.
-- *403 - Forbidden:* User is authenticated but not authorized.
-- *404 - Not Found:* Requested resource does not exist.
-- *409 - Conflict:* Request conflicts with existing data or a business rule.
-- *500 - Internal Server Error:* Unexpected server-side error.
+- _200 - OK:_ Request processed successfully.
+- _201 - Created:_ New resource created successfully.
+- _204 - No Content:_ Request processed successfully with no response body.
+- _400 - Bad Request:_ Invalid request or validation failure.
+- _401 - Unauthorized:_ Authentication is required.
+- _403 - Forbidden:_ User is authenticated but not authorized.
+- _404 - Not Found:_ Requested resource does not exist.
+- _409 - Conflict:_ Request conflicts with existing data or a business rule.
+- _500 - Internal Server Error:_ Unexpected server-side error.
 
 ---
 
@@ -148,10 +146,11 @@ The `data` field can contain additional validation or error information when req
 | POST      | `/auth/login`    |    200 | Authenticated user/session information |
 | POST      | `/auth/logout`   |    204 | No response                            |
 
-* Note that
-- register, login and logout are here only for reference.
-- They are not implemented in this project
-- You can implement them as a part of your learning of Spring Security
+- Note that
+
+* register, login and logout are here only for reference.
+* They are not implemented in this project
+* You can implement them as a part of your learning of Spring Security
 
 ---
 
@@ -309,11 +308,11 @@ Category 3:
 | Update              | PUT       | `/products/{productId}` | 200    | Updated product   |
 | Activate/Deactivate | PATCH     | `/products/{productId}` | 204    | No response       |
 
-Sample Product Data (All for Category  - 'Electronics'):
+Sample Product Data (All for Category - 'Electronics'):
 
 API End Point - POST: /api/v1/products
 
-----
+---
 
 ### Testing Product Creation API
 
@@ -321,13 +320,13 @@ To test the Product creation API using Postman:
 
 1. Open the `E-Com Base API` collection.
 2. Open the `Products` folder.
-3. Select *Add a Product*.
+3. Select _Add a Product_.
 4. Set the request method to `POST`.
 5. Set the URL to:
 
-```text
+````text
    {{baseUrl}}/products
-````
+
 
 6. Select _Body → form-data_.
 
@@ -337,7 +336,7 @@ To test the Product creation API using Postman:
 
    ```text
    application/json
-   ```
+````
 
 9. Enter the Product JSON in the `product` field.
 
