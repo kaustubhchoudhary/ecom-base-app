@@ -168,9 +168,9 @@ The `data` field can contain additional validation or error information when req
 
 ### Sample Role Data:
 
-API End Point - POST: /api/v1/roles
+**API End Point** - `POST: /api/v1/roles`
 
-Role 1:
+**Role 1**
 
 ```json
 {
@@ -179,7 +179,7 @@ Role 1:
 }
 ```
 
-Role 2:
+**Role 2**
 
 ```json
 {
@@ -213,9 +213,9 @@ Profile Specific APIs
 
 ### Sample User data:
 
-API End Point - POST: /api/v1/users
+**API End Point** - `POST: /api/v1/users`
 
-User 1: Admin
+**User 1: Admin**
 
 ```json
 {
@@ -227,7 +227,7 @@ User 1: Admin
 }
 ```
 
-User 2: Customer 1
+**User 2: Customer 1**
 
 ```json
 {
@@ -239,7 +239,7 @@ User 2: Customer 1
 }
 ```
 
-User 3: Customer 2
+**User 3: Customer 2**
 
 ```json
 {
@@ -274,9 +274,9 @@ User 3: Customer 2
 
 ### Sample Categories:
 
-API End Point - POST: /api/v1/categories
+**API End Point** - `POST: /api/v1/categories`
 
-Category 1:
+**Category 1:**
 
 ```json
 {
@@ -285,7 +285,7 @@ Category 1:
 }
 ```
 
-Category 2:
+**Category 2:**
 
 ```json
 {
@@ -294,7 +294,7 @@ Category 2:
 }
 ```
 
-Category 3:
+**Category 3:**
 
 ```json
 {
@@ -364,9 +364,9 @@ That captures the exact steps someone needs to successfully test your multipart 
 
 ### Sample Products' Data (Only for Category - 'Electronics'):
 
-API End Point - POST: /api/v1/products
+**API End Point** - `POST: /api/v1/products`
 
-Product 1 - Category 1:
+**Product 1 - Category 1:**
 
 ```json
 {
@@ -387,7 +387,7 @@ Image: product_1.png
 
 ---
 
-Product 2 - Category 1:
+**Product 2 - Category 1:**
 
 ```json
 {
@@ -406,7 +406,7 @@ Image: product_2.png
 
 ---
 
-Product 3 - Category 1:
+**Product 3 - Category 1:**
 
 ```json
 {
@@ -487,9 +487,9 @@ They are created as part of order creation rather than through an independent cr
 
 ### Sample Data Orders
 
-API End Point - POST: /api/v1/orders
+**API End Point** - `POST: /api/v1/orders`
 
-Order 1:
+**Order 1**
 
 ```json
 {
@@ -507,7 +507,7 @@ Order 1:
 }
 ```
 
-Order 2:
+**Order 2**
 
 ```json
 {
@@ -525,7 +525,7 @@ Order 2:
 }
 ```
 
-Order 3:
+**Order 3**
 
 ```json
 {
@@ -545,7 +545,9 @@ Order 3:
 
 ### Change Order Status
 
-Order 1:
+**API End Point** - `PATCH: /api/v1/orders/1/status`
+
+**Order 1**
 
 ```json
 {
@@ -553,7 +555,9 @@ Order 1:
 }
 ```
 
-Order 2:
+**API End Point** - `PATCH: /api/v1/orders/2/status`
+
+**Order 2**
 
 ```json
 {
@@ -590,9 +594,9 @@ Order 2:
 
 ### Sample Payment Data:
 
-API End Point - POST: /api/v1/orders/1/payments
+**API End Point** - `POST: /api/v1/orders/1/payments`
 
-OrderId: 1
+**OrderId: 1**
 
 ```json
 {
@@ -600,7 +604,9 @@ OrderId: 1
 }
 ```
 
-OrderId: 2
+**API End Point** - `POST: /api/v1/orders/2/payments`
+
+**OrderId: 2**
 
 ```json
 {
@@ -608,7 +614,7 @@ OrderId: 2
 }
 ```
 
-OrderId: 3
+**OrderId: 3**
 
 ```json
 {
