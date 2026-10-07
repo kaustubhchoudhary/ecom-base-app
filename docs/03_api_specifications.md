@@ -172,17 +172,21 @@ API End Point - POST: /api/v1/roles
 
 Role 1:
 
+```json
 {
-"name": "ADMIN",
-"description": "Administrator with access to manage the application"
+  "name": "ADMIN",
+  "description": "Administrator with access to manage the application"
 }
+```
 
 Role 2:
 
+```json
 {
-"name": "CUSTOMER",
-"description": "Customer who can browse products and place orders"
+  "name": "CUSTOMER",
+  "description": "Customer who can browse products and place orders"
 }
+```
 
 ## 8.2 Users
 
@@ -213,33 +217,39 @@ API End Point - POST: /api/v1/users
 
 User 1: Admin
 
+```json
 {
-"name": "Rahul Sharma",
-"email": "rahul.sharma@example.com",
-"password": "Admin@123",
-"phone": "9876543210",
-"roleId": 1
+  "name": "Rahul Sharma",
+  "email": "rahul.sharma@example.com",
+  "password": "Admin@123",
+  "phone": "9876543210",
+  "roleId": 1
 }
+```
 
 User 2: Customer 1
 
+```json
 {
-"name": "Priya Verma",
-"email": "priya.verma@example.com",
-"password": "Customer@123",
-"phone": "9876543211",
-"roleId": 2
+  "name": "Priya Verma",
+  "email": "priya.verma@example.com",
+  "password": "Customer@123",
+  "phone": "9876543211",
+  "roleId": 2
 }
+```
 
 User 3: Customer 2
 
+```json
 {
-"name": "Amit Patel",
-"email": "amit.patel@example.com",
-"password": "Customer@456",
-"phone": "9876543212",
-"roleId": 2
+  "name": "Amit Patel",
+  "email": "amit.patel@example.com",
+  "password": "Customer@456",
+  "phone": "9876543212",
+  "roleId": 2
 }
+```
 
 ---
 
@@ -268,24 +278,30 @@ API End Point - POST: /api/v1/categories
 
 Category 1:
 
+```json
 {
-"name": "Electronics",
-"description": "Mobiles, laptops, tablets and electronic accessories"
+  "name": "Electronics",
+  "description": "Mobiles, laptops, tablets and electronic accessories"
 }
+```
 
 Category 2:
 
+```json
 {
-"name": "Clothing",
-"description": "Men's, women's and kids' clothing and fashion products"
+  "name": "Clothing",
+  "description": "Men's, women's and kids' clothing and fashion products"
 }
+```
 
 Category 3:
 
+```json
 {
-"name": "Home & Kitchen",
-"description": "Home appliances, kitchen products and household essentials"
+  "name": "Home & Kitchen",
+  "description": "Home appliances, kitchen products and household essentials"
 }
+```
 
 ---
 
@@ -324,9 +340,9 @@ To test the Product creation API using Postman:
 4. Set the request method to `POST`.
 5. Set the URL to:
 
-````text
+```text
    {{baseUrl}}/products
-
+```
 
 6. Select _Body → form-data_.
 
@@ -334,9 +350,9 @@ To test the Product creation API using Postman:
 
 8. Set the `Content-Type` of the `product` part to:
 
-   ```text
+```text
    application/json
-````
+```
 
 9. Enter the Product JSON in the `product` field.
 
@@ -348,10 +364,7 @@ To test the Product creation API using Postman:
 
 13. Verify that the API returns `201 Created`.
 
-```
-
 That captures the exact steps someone needs to successfully test your multipart Product API.
-```
 
 ---
 
@@ -480,63 +493,69 @@ API End Point - POST: /api/v1/orders
 
 Order 1:
 
-```json
 Sample Data Orders
 
 API End Point - POST: /api/v1/orders
 
 Order 1:
 
+```json
 {
-    "userId": 2,
-    "items": [
-        {
-            "productId": 1,
-            "quantity": 2
-        },
-        {
-            "productId": 2,
-            "quantity": 1
-        }
-    ]
+  "userId": 2,
+  "items": [
+    {
+      "productId": 1,
+      "quantity": 2
+    },
+    {
+      "productId": 2,
+      "quantity": 1
+    }
+  ]
 }
+```
 
 Order 2:
 
+```json
 {
-    "userId": 3,
-    "items": [
-        {
-            "productId": 2,
-            "quantity": 2
-        },
-        {
-            "productId": 3,
-            "quantity": 1
-        }
-    ]
+  "userId": 3,
+  "items": [
+    {
+      "productId": 2,
+      "quantity": 2
+    },
+    {
+      "productId": 3,
+      "quantity": 1
+    }
+  ]
 }
+```
 
 Order 3:
 
+```json
 {
-    "userId": 2,
-    "items": [
-        {
-            "productId": 1,
-            "quantity": 1
-        },
-        {
-            "productId": 3,
-            "quantity": 3
-        }
-    ]
+  "userId": 2,
+  "items": [
+    {
+      "productId": 1,
+      "quantity": 1
+    },
+    {
+      "productId": 3,
+      "quantity": 3
+    }
+  ]
 }
+```
 
 Change Order Status
 
+```json
 {
-    "status": "CONFIRMED"
+  "status": "CONFIRMED"
 }
 ```
 
@@ -579,20 +598,27 @@ Sample Payment Data:
 
 API End Point - POST: /api/v1/orders/1/payments
 
-```
 OrderId: 1
- {
- "paymentMethod": "UPI"
- }
 
- OrderId: 2
- {
- "paymentMethod": "COD"
- }
-
- OrderId: 3
+```json
 {
-"paymentMethod": "WALLET"
+  "paymentMethod": "UPI"
+}
+```
+
+OrderId: 2
+
+```json
+{
+  "paymentMethod": "COD"
+}
+```
+
+OrderId: 3
+
+```json
+{
+  "paymentMethod": "WALLET"
 }
 ```
 
