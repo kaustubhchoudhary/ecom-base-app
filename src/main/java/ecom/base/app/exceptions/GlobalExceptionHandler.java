@@ -57,4 +57,15 @@ public class GlobalExceptionHandler {
 
         }
 
+        @ExceptionHandler(RefundAmountExceededException.class)
+        public ResponseEntity<ApiResponseDTO<Void>> handleRefundAmountExceeded(
+                        RefundAmountExceededException ex) {
+
+                ApiResponseDTO<Void> response = new ApiResponseDTO<>();
+                response.setMessage(ex.getMessage());
+                response.setData(null);
+
+                return ResponseEntity.badRequest().body(response);
+        }
+
 }

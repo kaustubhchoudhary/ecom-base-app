@@ -16,10 +16,6 @@ public class PaymentResponseDTO {
 
     private PaymentMethod paymentMethod;
 
-    private PaymentStatus status;
-
-    private String gateway;
-
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;

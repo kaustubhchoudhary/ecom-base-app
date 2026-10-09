@@ -10,6 +10,4 @@ public class TransactionRequestDTO {
     private BigDecimal amount;
 
     private TransactionType type;
-
-    private String gateway;
 }

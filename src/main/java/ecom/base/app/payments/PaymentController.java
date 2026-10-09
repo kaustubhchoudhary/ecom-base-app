@@ -37,6 +37,20 @@ public class PaymentController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/refund")
+    public ResponseEntity<ApiResponseDTO<RefundResponseDTO>> refundPayment(
+            @PathVariable Long paymentId,
+            @RequestBody RefundRequestDTO requestDTO) {
+
+        RefundResponseDTO responseDTO = paymentService.refundPayment(paymentId, requestDTO);
+
+        ApiResponseDTO<RefundResponseDTO> response = new ApiResponseDTO<>();
+        response.setMessage("Refund processed successfully");
+        response.setData(responseDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
     @PostMapping("/transactions")
     public ResponseEntity<ApiResponseDTO<TransactionResponseDTO>> createTransaction(
             @PathVariable Long paymentId,
@@ -64,4 +78,5 @@ public class PaymentController {
 
         return ResponseEntity.ok(response);
     }
+
 }

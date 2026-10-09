@@ -18,13 +18,7 @@ public class TransactionResponseDTO {
 
     private TransactionType type;
 
-    private String gateway;
-
     private String status;
-
-    private String responseCode;
-
-    private String responseMessage;
 
     private LocalDateTime transactionDate;
 

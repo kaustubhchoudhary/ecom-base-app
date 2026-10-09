@@ -14,87 +14,86 @@ import ecom.base.app.orders.OrderRepository;
 @Service
 public class TransactionService {
 
-    private final TransactionRepository transactionRepository;
-    private final PaymentRepository paymentRepository;
-    private final UserRepository userRepository;
-    private final OrderRepository orderRepository;
+        private final TransactionRepository transactionRepository;
+        private final PaymentRepository paymentRepository;
+        private final UserRepository userRepository;
+        private final OrderRepository orderRepository;
 
-    public TransactionService(
-            TransactionRepository transactionRepository,
-            PaymentRepository paymentRepository,
-            UserRepository userRepository,
-            OrderRepository orderRepository) {
+        public TransactionService(
+                        TransactionRepository transactionRepository,
+                        PaymentRepository paymentRepository,
+                        UserRepository userRepository,
+                        OrderRepository orderRepository) {
 
-        this.transactionRepository = transactionRepository;
-        this.paymentRepository = paymentRepository;
-        this.userRepository = userRepository;
-        this.orderRepository = orderRepository;
-    }
+                this.transactionRepository = transactionRepository;
+                this.paymentRepository = paymentRepository;
+                this.userRepository = userRepository;
+                this.orderRepository = orderRepository;
+        }
 
-    @Transactional
-    public TransactionResponseDTO createTransaction(
-            Long paymentId,
-            TransactionRequestDTO requestDTO) {
+        @Transactional
+        public TransactionResponseDTO createTransaction(
+                        Long paymentId,
+                        TransactionRequestDTO requestDTO) {
 
-        Payment payment = paymentRepository.findById(paymentId)
-                .orElseThrow(() -> new RuntimeException("Payment not found"));
+                Payment payment = paymentRepository.findById(paymentId)
+                                .orElseThrow(() -> new RuntimeException("Payment not found"));
 
-        Transaction transaction = new Transaction();
+                Transaction transaction = new Transaction();
 
-        transaction.setPayment(payment);
-        transaction.setTransactionRef("TXN-" + System.currentTimeMillis());
-        transaction.setAmount(requestDTO.getAmount());
-        transaction.setType(requestDTO.getType());
-        transaction.setGateway(requestDTO.getGateway());
-        transaction.setStatus("SUCCESS");
-        transaction.setTransactionDate(LocalDateTime.now());
+                transaction.setPayment(payment);
+                transaction.setTransactionRef("TXN-" + System.currentTimeMillis());
+                transaction.setAmount(requestDTO.getAmount());
+                transaction.setType(requestDTO.getType());
+                transaction.setStatus("SUCCESS");
+                transaction.setTransactionDate(LocalDateTime.now());
 
-        Transaction savedTransaction = transactionRepository.save(transaction);
+                Transaction savedTransaction = transactionRepository.save(transaction);
 
-        return TransactionMapper.toTransactionResponseDTO(savedTransaction);
-    }
+                return TransactionMapper.toTransactionResponseDTO(savedTransaction);
+        }
 
-    public TransactionResponseDTO getTransactionById(Long transactionId) {
+        public TransactionResponseDTO getTransactionById(Long transactionId) {
 
-        Transaction transaction = transactionRepository.findById(transactionId)
-                .orElseThrow(() -> new RuntimeException("Transaction not found"));
+                Transaction transaction = transactionRepository.findById(transactionId)
+                                .orElseThrow(() -> new RuntimeException("Transaction not found"));
 
-        return TransactionMapper.toTransactionResponseDTO(transaction);
-    }
+                return TransactionMapper.toTransactionResponseDTO(transaction);
+        }
 
-    public List<TransactionResponseDTO> getTransactionsByPaymentId(
-            Long paymentId) {
+        public List<TransactionResponseDTO> getTransactionsByPaymentId(
+                        Long paymentId) {
 
-        paymentRepository.findById(paymentId)
-                .orElseThrow(() -> new RuntimeException("Payment not found"));
+                paymentRepository.findById(paymentId)
+                                .orElseThrow(() -> new RuntimeException("Payment not found"));
 
-        return transactionRepository.findByPaymentId(paymentId)
-                .stream()
-                .map(TransactionMapper::toTransactionResponseDTO)
-                .toList();
-    }
+                return transactionRepository.findByPaymentId(paymentId)
+                                .stream()
+                                .map(TransactionMapper::toTransactionResponseDTO)
+                                .toList();
+        }
 
-    public List<TransactionResponseDTO> getTransactionsByUserId(
-            Long userId) {
+        public List<TransactionResponseDTO> getTransactionsByUserId(
+                        Long userId) {
 
-        userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                userRepository.findById(userId)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        return transactionRepository.findByPaymentOrderUserId(userId)
-                .stream()
-                .map(TransactionMapper::toTransactionResponseDTO)
-                .toList();
-    }
+                return transactionRepository.findByPaymentOrderUserId(userId)
+                                .stream()
+                                .map(TransactionMapper::toTransactionResponseDTO)
+                                .toList();
+        }
 
-    public List<TransactionResponseDTO> getTransactionsByOrderId(
-            Long orderId) {
+        public List<TransactionResponseDTO> getTransactionsByOrderId(
+                        Long orderId) {
 
-        orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                orderRepository.findById(orderId)
+                                .orElseThrow(() -> new RuntimeException("Order not found"));
 
-        return transactionRepository.findByPaymentOrderId(orderId)
-                .stream()
-                .map(TransactionMapper::toTransactionResponseDTO)
-                .toList();
-    }
+                return transactionRepository.findByPaymentOrderId(orderId)
+                                .stream()
+                                .map(TransactionMapper::toTransactionResponseDTO)
+                                .toList();
+        }
 }

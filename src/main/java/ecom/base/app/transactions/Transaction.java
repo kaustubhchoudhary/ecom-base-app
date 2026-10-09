@@ -34,17 +34,8 @@ public class Transaction {
     @Column(nullable = false, length = 20)
     private TransactionType type;
 
-    @Column(length = 50)
-    private String gateway;
-
     @Column(nullable = false, length = 20)
     private String status;
-
-    @Column(length = 50)
-    private String responseCode;
-
-    @Column(length = 255)
-    private String responseMessage;
 
     @Column(nullable = false)
     private LocalDateTime transactionDate;

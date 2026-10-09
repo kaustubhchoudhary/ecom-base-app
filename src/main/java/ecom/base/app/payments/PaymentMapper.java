@@ -11,8 +11,6 @@ public class PaymentMapper {
         responseDTO.setOrderId(payment.getOrder().getId());
         responseDTO.setAmount(payment.getAmount());
         responseDTO.setPaymentMethod(payment.getPaymentMethod());
-        responseDTO.setStatus(payment.getStatus());
-        responseDTO.setGateway(payment.getGateway());
         responseDTO.setCreatedAt(payment.getCreatedAt());
         responseDTO.setUpdatedAt(payment.getUpdatedAt());
 

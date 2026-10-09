@@ -570,7 +570,7 @@ They are created as part of order creation rather than through an independent cr
 
 ## Business Requirements
 
-- A customer should be able to initiate payment for an order.
+- A customer should be able to make a payment for an order.
 - Payment is simulated in this project.
 - No real payment gateway is integrated.
 - Supported payment methods are:
@@ -579,12 +579,16 @@ They are created as part of order creation rather than through an independent cr
   - `UPI`
   - `NET_BANKING`
   - `WALLET`
-
-- Payment status can be:
-  - `PENDING`
+- A successful payment should create:
+  - A payment record.
+  - A `PAYMENT` transaction with `SUCCESS` status.
+- The payment amount should be derived from the order amount.
+- A customer should be able to request a refund for a payment.
+- A refund should create a `REFUND` transaction.
+- Partial refunds should be supported.
+- Transaction status can be:
   - `SUCCESS`
   - `FAILED`
-  - `REFUNDED`
 
 | HTTP Verb | Endpoint                    | Status | Expected Response |
 | --------- | --------------------------- | -----: | ----------------- |
@@ -634,14 +638,75 @@ Transactions can represent activities such as:
 
 ## Business Requirements
 
-- Transaction information should be associated with a payment.
+- A transaction should be associated with a payment.
 - A transaction should contain the transaction amount.
 - A transaction should identify its type.
+- A successful payment should create a `PAYMENT` transaction.
+- A refund should create a `REFUND` transaction.
+- Partial refunds should be supported.
 - Transaction records should be retrievable for a payment.
 
-| HTTP Verb | Endpoint                             | Status | Expected Response            |
-| --------- | ------------------------------------ | -----: | ---------------------------- |
-| GET       | `/payments/{paymentId}/transactions` |    200 | List of payment transactions |
+| HTTP Verb | Endpoint                             | Status | Expected Response                       |
+| --------- | ------------------------------------ | ------ | --------------------------------------- |
+| POST      | `/orders/{orderId}/payment`          | 201    | Created payment and payment transaction |
+| POST      | `/payments/{paymentId}/refund`       | 201    | Created refund transaction              |
+| GET       | `/payments/{paymentId}/transactions` | 200    | List of payment transactions            |
+
+- Note that
+  - `Every payment will make 2 entries - one in the payment and another one in the transaction table with type - PAYMENT`
+
+### Refund payment
+
+## Sample JSON
+
+Assume:
+
+```text
+Payment ID = 1
+Payment Amount = ₹136,997
+```
+
+### Full refund
+
+**API End Point** - `POST: /api/v1/payments/1/refund`
+
+```json
+{
+  "amount": 136997.0
+}
+```
+
+### Partial refund
+
+```json
+{
+  "amount": 20000.0
+}
+```
+
+This creates a new transaction:
+
+```text
+Transaction Type : REFUND
+Amount           : 20000.00
+Status           : SUCCESS
+```
+
+If you subsequently refund another ₹30,000, you'll have:
+
+```text
+PAYMENT   ₹136,997
+REFUND     ₹20,000
+REFUND     ₹30,000
+```
+
+and the remaining refundable amount is:
+
+```text
+₹86,997
+```
+
+This also prevents the customer from refunding more than the amount actually paid.
 
 ---
 

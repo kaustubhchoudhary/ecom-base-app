@@ -12,10 +12,7 @@ public class TransactionMapper {
         responseDTO.setTransactionRef(transaction.getTransactionRef());
         responseDTO.setAmount(transaction.getAmount());
         responseDTO.setType(transaction.getType());
-        responseDTO.setGateway(transaction.getGateway());
         responseDTO.setStatus(transaction.getStatus());
-        responseDTO.setResponseCode(transaction.getResponseCode());
-        responseDTO.setResponseMessage(transaction.getResponseMessage());
         responseDTO.setTransactionDate(transaction.getTransactionDate());
         responseDTO.setCreatedAt(transaction.getCreatedAt());
 

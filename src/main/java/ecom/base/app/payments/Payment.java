@@ -32,13 +32,6 @@ public class Payment {
     @Column(nullable = false, length = 20)
     private PaymentMethod paymentMethod;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private PaymentStatus status;
-
-    @Column(length = 100)
-    private String gateway;
-
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
