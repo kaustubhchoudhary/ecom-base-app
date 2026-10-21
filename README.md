@@ -1,6 +1,6 @@
 # ecom-base-app
 
-Mini E-Commerce REST API built with Spring Boot.
+Mini E-Commerce REST API Application built with Spring Boot, Spring Data JPA and MySQL
 
 ## 1. Project Overview
 
@@ -15,9 +15,8 @@ The application is designed as a practical base project covering the core backen
 - Payment processing
 - Transaction management
 - Order cancellation
-- Role-based API authorization
 
-The project is intentionally kept modular so that additional technologies and concepts can be introduced progressively.
+The project is intentionally kept modular so that additional technologies and concepts can be learnt/introduced progressively.
 
 ## 2. Technology Stack
 
