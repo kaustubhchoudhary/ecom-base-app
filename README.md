@@ -1,22 +1,34 @@
 # ecom-base-app
 
-Mini E-Commerce REST API Application built with Spring Boot, Spring Data JPA and MySQL
-
 ## 1. Project Overview
 
-`ecom-base-app` is a backend REST API for a mini e-commerce application.
+Welcome to **ecom-base-app**!
 
-The application is designed as a practical base project covering the core backend flow of an e-commerce system:
+`ecom-base-app` is a Mini E-Commerce REST API application built using Java, Spring Boot, Spring Data JPA, Hibernate, and MySQL.
+
+Use this project to explore the backend of a basic e-commerce system and understand how its components work together. The application covers core e-commerce concepts such as:
 
 - User management
-- Category management
-- Product management
+- Category and product management
 - Order management
-- Payment processing
-- Transaction management
+- Payment and transaction management
 - Order cancellation
 
-The project is intentionally kept modular so that additional technologies and concepts can be learnt/introduced progressively.
+The project provides a foundation that you can explore, test, and extend as you learn additional Java and Spring technologies.
+
+### Explore the Project Resources
+
+Use the following resources to understand the application and get started:
+
+- **Business Requirements:** [`docs/01_brd.md`](docs/01_brd.md)
+- **Database Design:** [`docs/02_er_schema.md`](docs/02_er_schema.md)
+- **API Specifications:** [`docs/03_api_specifications.md`](docs/03_api_specifications.md)
+- **API Authorization:** [`docs/04_protected_apis.md`](docs/04_protected_apis.md)
+- **Postman Collection:** [`docs/05_postman_collection.json`](docs/05_postman_collection.json)
+- **Learning Resources:** [`learning_resources/`](learning_resources/)
+- **Product Images for API Testing:** [`product_images/`](product_images/)
+
+Start by reviewing the business requirements and database design. Then set up the application, explore the API specifications, and use the Postman collection to test the available endpoints.
 
 ## 2. Technology Stack
 
