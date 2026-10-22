@@ -200,12 +200,17 @@ Wait for Spring Boot to finish starting. Check the terminal logs for a successfu
 
 ### 4.5 Verify the Application
 
+#### Test the Server:
+
 After starting the application, check the terminal logs to ensure that Spring Boot has started successfully.
 
-The application runs at:
+#### Test the API:
 
-- **Application base URL:** `http://localhost:9192`
-- **API base URL:** `http://localhost:9192/api/v1`
+All REST APIs in this application use the following base URL:
+
+```text
+http://localhost:9192/api/v1
+```
 
 To verify that an API is responding, open Postman and send the following request:
 
@@ -213,7 +218,7 @@ To verify that an API is responding, open Postman and send the following request
 GET http://localhost:9192/api/v1/categories
 ```
 
-If no categories have been created, the API returns the following response:
+If the database contains no categories, the API returns the following response:
 
 ```json
 {
@@ -232,17 +237,17 @@ All REST APIs in this application use the following base URL:
 
 ```text
 http://localhost:9192/api/v1
-````
+```
 
 For example, to retrieve categories, send a `GET` request to:
 
-```
+````
 
 For example, to retrieve categories, send the following request using Postman:
 
 ```http
 GET http://localhost:9192/api/v1/categories
-```
+````
 
 Refer to [`docs/03_api_specifications.md`](docs/03_api_specifications.md) for the complete list of API endpoints, HTTP methods, and expected responses.
 
