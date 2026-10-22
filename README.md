@@ -207,15 +207,13 @@ The application runs at:
 - **Application base URL:** `http://localhost:9192`
 - **API base URL:** `http://localhost:9192/api/v1`
 
-The database may initially contain no records. Therefore, a successful API request may return an empty list if no data has been added yet.
-
-For example, send the following request using Postman:
+To verify that an API is responding, open Postman and send the following request:
 
 ```http
 GET http://localhost:9192/api/v1/categories
 ```
 
-If the response is:
+If no categories have been created, the API returns the following response:
 
 ```json
 {
@@ -224,29 +222,29 @@ If the response is:
 }
 ```
 
-This simply indicates that no categories have been created yet. You can add data using the available API endpoints and then test the corresponding GET requests again.
+This response indicates that no categories are currently available. You can create categories using the available API endpoints and retrieve them using the corresponding GET request.
 
 Refer to [Section 8 — Import Postman Collection](#8-import-postman-collection) for instructions on importing the API collection.
 
 ## 5. API Base URL
 
-The application exposes its REST APIs under the following base URL:
+All REST APIs in this application use the following base URL:
 
 ```text
 http://localhost:9192/api/v1
-```
+````
 
 For example, to retrieve categories, send a `GET` request to:
 
 ```
+
+For example, to retrieve categories, send the following request using Postman:
+
+```http
 GET http://localhost:9192/api/v1/categories
 ```
 
-Refer to [`docs/03_api_specifications.md`](https://docs/03_api_specifications.md?utm_source=chatgpt.com) for the complete list of API endpoints, HTTP methods, and expected responses.
-
-```
-After this, we can move to **Section 6 — Project Documentation**, which links to the BRD, ER schema, API specifications, protected APIs, and Postman collection.
-```
+Refer to [`docs/03_api_specifications.md`](docs/03_api_specifications.md) for the complete list of API endpoints, HTTP methods, and expected responses.
 
 ## 6. Project Documentation
 
