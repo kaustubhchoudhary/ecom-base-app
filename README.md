@@ -228,18 +228,13 @@ This simply indicates that no categories have been created yet. You can add data
 
 Refer to [Section 8 — Import Postman Collection](#8-import-postman-collection) for instructions on importing the API collection.
 
-The next section is Section 5 — API Base URL.
-
-We should keep it short because the detailed endpoints are already documented in `docs/03_api_specifications.md`.
-
-````
 ## 5. API Base URL
 
 The application exposes its REST APIs under the following base URL:
 
 ```text
 http://localhost:9192/api/v1
-````
+```
 
 For example, to retrieve categories, send a `GET` request to:
 
