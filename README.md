@@ -40,101 +40,217 @@ Start by reviewing the business requirements and database design. Then set up th
 - Maven
 - REST APIs
 
-## 3. Prerequisites
+## 3. Prerequisites and Installation
 
-Make sure the following are installed on your Windows system:
+This project is developed using **Visual Studio Code (VS Code)** on Windows. Before running the application, install and configure the following tools.
 
-- JDK 25
-- MySQL 8.0
-- Git
-- VS Code or any Java-compatible IDE
+### 3.1 Install Java Development Kit (JDK)
 
-Verify Java:
+The application requires **JDK 25**.
+
+1. Download JDK 25 from the [official Java downloads page](https://www.oracle.com/java/technologies/downloads/).
+2. Select the Windows installer for your system and complete the installation.
+3. Open a new terminal and verify the installation:
 
 ```text
 java -version
+javac -version
 ```
 
-Verify Maven Wrapper:
+Both commands should display Java version 25.
+
+### 3.2 Install MySQL Server
+
+MySQL Server stores the application's data.
+
+1. Visit the [MySQL Community Server download page](https://dev.mysql.com/downloads/mysql/).
+2. Select Windows and choose a **MySQL 8.0** release.
+3. Download the installer and follow the installation instructions.
+4. Configure the MySQL root account password and remember it for application configuration.
+5. Ensure the MySQL server is running.
+
+The database `ecommerce_db` will be created during the project setup.
+
+### 3.3 Install MySQL Workbench
+
+MySQL Workbench provides a graphical interface for connecting to MySQL, executing SQL queries, and managing databases.
+
+1. Download it from the [official MySQL Workbench page](https://dev.mysql.com/downloads/workbench/).
+2. Install and open MySQL Workbench.
+3. Create a connection to your local MySQL Server using the configured credentials.
+4. Test the connection.
+
+**Note:** MySQL Server and MySQL Workbench are separate tools. Installing Workbench alone does not install the database server.
+
+### 3.4 Install Visual Studio Code
+
+VS Code is the recommended editor for exploring and working with this project.
+
+1. Download VS Code from the [official download page](https://code.visualstudio.com/Download).
+2. Run the Windows installer and complete the installation.
+3. Open VS Code and install the **Extension Pack for Java** from the Extensions view.
+4. Open the cloned `ecom-base-app` folder in VS Code.
+
+### 3.5 Install Git
+
+Git is used to clone the repository and manage source code.
+
+1. Download Git for Windows from the [official Git website](https://git-scm.com/install/windows).
+2. Install Git using the recommended defaults.
+3. Open a new terminal and verify the installation:
 
 ```text
-mvnw.cmd -version
+git --version
 ```
+
+### 3.6 Install Postman
+
+Postman is used to send HTTP requests to the application's REST APIs and inspect their responses.
+
+1. Download Postman from the [official download page](https://www.postman.com/downloads/).
+2. Install and open Postman.
+3. You will use it to import the project's API collection and test the endpoints.
+
+### 3.7 Maven
+
+This project includes the **Maven Wrapper** (`mvnw` and `mvnw.cmd`), which can download and use the configured Maven version when required.
+
+A separate Maven installation is generally not necessary.
+
+After cloning the repository, open a terminal in the project root directory and run:
+
+```text
+.\mvnw.cmd -version
+```
+
+This displays the Maven and Java versions used by the wrapper.
+
+### Installation Checklist
+
+Before proceeding to project setup, ensure that:
+
+- [ ] JDK 25 is installed and working.
+- [ ] MySQL Server 8.0 is installed and running.
+- [ ] MySQL Workbench can connect to the local server.
+- [ ] VS Code and the Extension Pack for Java are installed.
+- [ ] Git is installed and available in the terminal.
+- [ ] Postman is installed.
 
 ## 4. Project Setup
 
-### Step 1: Clone the Repository
+Follow these steps to clone, configure, and run the application on your local machine.
 
-```bash
+### 4.1 Clone the Repository
+
+Open a terminal and execute the following commands:
+
+```powershell
 git clone https://github.com/kaustubhchoudhary/ecom-base-app.git
-```
-
-Move into the project directory:
-
-```bash
 cd ecom-base-app
 ```
 
-### Step 2: Create the Database
+### 4.2 Create the Database
 
-Open MySQL and execute:
+1. Open MySQL Workbench and connect to your local MySQL Server.
+2. Open a new SQL query tab and execute:
 
 ```sql
 CREATE DATABASE ecommerce_db;
 ```
 
-### Step 3: Configure Database Connection
+### 4.3 Configure Database Credentials and Server Port
 
-Open:
+Open the following file in VS Code:
 
-```text
-src/main/resources/application.properties
-```
+`src/main/resources/application.properties`
 
-Configure the MySQL connection:
+Update the database connection settings to match your local MySQL configuration.
 
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/ecommerce_db
-spring.datasource.username=root
-spring.datasource.password=1234
-```
+spring.datasource.username=YOUR_MYSQL_USERNAME
+spring.datasource.password=YOUR_MYSQL_PASSWORD
 
-Update the username and password according to your local MySQL setup.
-
-The application uses:
-
-```properties
 spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+server.port=9192
 ```
 
-Hibernate will automatically create or update the required database tables.
+**Important:**
 
-### Step 4: Run the Application
+- Replace `YOUR_MYSQL_USERNAME` with your MySQL username.
+- Replace `YOUR_MYSQL_PASSWORD` with the password configured for that MySQL account.
+- The example assumes MySQL is running on port `3306`. Change it if your MySQL Server uses a different port.
+- The application is configured to run on port `9192`.
+- Do not commit your actual database password to a public Git repository.
 
-On Windows:
+Save the file before proceeding.
 
-```bash
-mvnw.cmd spring-boot:run
+### 4.4 Run the Application
+
+Ensure that MySQL Server is running. Open the VS Code terminal in the project root directory and execute:
+
+```powershell
+.\mvnw.cmd spring-boot:run
 ```
 
-The application will start on:
+Wait for Spring Boot to finish starting. Check the terminal logs for a successful startup message.
 
-```text
-http://localhost:9192
+### 4.5 Verify the Application
+
+After starting the application, check the terminal logs to ensure that Spring Boot has started successfully.
+
+The application runs at:
+
+- **Application base URL:** `http://localhost:9192`
+- **API base URL:** `http://localhost:9192/api/v1`
+
+The database may initially contain no records. Therefore, a successful API request may return an empty list if no data has been added yet.
+
+For example, send the following request using Postman:
+
+```http
+GET http://localhost:9192/api/v1/categories
 ```
 
+If the response is:
+
+```json
+{
+  "message": "No Categories found in the database",
+  "data": null
+}
+```
+
+This simply indicates that no categories have been created yet. You can add data using the available API endpoints and then test the corresponding GET requests again.
+
+Refer to [Section 8 — Import Postman Collection](#8-import-postman-collection) for instructions on importing the API collection.
+
+The next section is Section 5 — API Base URL.
+
+We should keep it short because the detailed endpoints are already documented in `docs/03_api_specifications.md`.
+
+````
 ## 5. API Base URL
 
-All application APIs use:
+The application exposes its REST APIs under the following base URL:
 
 ```text
 http://localhost:9192/api/v1
+````
+
+For example, to retrieve categories, send a `GET` request to:
+
+```
+GET http://localhost:9192/api/v1/categories
 ```
 
-Example:
+Refer to [`docs/03_api_specifications.md`](https://docs/03_api_specifications.md?utm_source=chatgpt.com) for the complete list of API endpoints, HTTP methods, and expected responses.
 
-```text
-GET http://localhost:9192/api/v1/categories
+```
+After this, we can move to **Section 6 — Project Documentation**, which links to the BRD, ER schema, API specifications, protected APIs, and Postman collection.
 ```
 
 ## 6. Project Documentation
