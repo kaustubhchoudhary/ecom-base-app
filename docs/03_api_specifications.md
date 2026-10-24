@@ -1,63 +1,65 @@
 # Document 3 - API Specifications
 
-## Mini E-Commerce Application
+**Mini E-Commerce Application**
 
 _Purpose:_ Define the REST APIs required by the application.
 
 ---
 
-# 1. Purpose
+## 1. Purpose
 
-The API layer provides communication between the client and the e-commerce application.
+This document defines the REST APIs for the Mini E-Commerce Application.
 
-The APIs define:
+It describes the following:
 
-- Resources
-- HTTP methods
-- Endpoints
-- Expected response data
-- HTTP status codes
-- REST naming conventions
-- Success response format
-- Error response format
+- **API Endpoints:** Available resources and their URLs.
+- **HTTP Methods:** Operations supported by each endpoint.
+- **Request and Response Formats:** Expected data structures.
+- **HTTP Status Codes:** Outcomes of API requests.
+- **Business Rules:** Key rules governing application operations.
 
-Authorization is intentionally excluded.
+The APIs cover the application's core functionality, including users, roles, product categories, products, orders, payments, transactions, and cancellations.
 
-Authorization will be defined separately in:
+This document serves as a reference for understanding the API design and testing the available endpoints using Postman.
 
-_Document 4 - Protected APIs Based on Roles_
+**Scope:**
+
+- Authentication and authorization using Spring Security are not implemented in the base application.
+- Implementing Spring Security, including authentication & role-based access control, is a separate exercise.
 
 ---
 
-# 2. API Base Path
+## 2. API Base Path
 
-All APIs use the following base path:
+**Base URL:**
+
+```text
+http://localhost:9192
+```
+
+**API Base Path:**
 
 ```text
 /api/v1
 ```
 
-Therefore, the endpoints in this document are written relative to:
+Combining the two, the effective base URL:
 
-```text
-/api/v1
-```
+`http://localhost:9192/api/v1`
 
-For example:
+Endpoints in this document are relative to this base URL.
 
-```text
-/api/v1/products
-```
+**Example:**
 
-is represented in the tables as:
-
-```text
-/products
-```
+| Base URL                | Base Path | Endpoint    | Complete URL                            |
+| ----------------------- | --------- | ----------- | --------------------------------------- |
+| `http://localhost:9192` | `/api/v1` | `/products` | `http://localhost:9192/api/v1/products` |
 
 ---
 
-# 3. HTTP Methods
+## 3. HTTP Methods
+
+HTTP methods define the type of action a client wants to perform on a resource hosted by a server.
 
 | HTTP Method | Purpose                                   |
 | ----------- | ----------------------------------------- |
@@ -69,7 +71,9 @@ is represented in the tables as:
 
 ---
 
-# 4. Standard Response Status Codes
+## 4. Standard Response Status Codes
+
+HTTP status codes indicate the outcome of an API request. They help clients understand whether a request succeeded or encountered an error.
 
 - _200 - OK:_ Request processed successfully.
 - _201 - Created:_ New resource created successfully.
@@ -80,6 +84,59 @@ is represented in the tables as:
 - _404 - Not Found:_ Requested resource does not exist.
 - _409 - Conflict:_ Request conflicts with existing data or a business rule.
 - _500 - Internal Server Error:_ Unexpected server-side error.
+
+---
+
+## 5. REST Naming Conventions
+
+REST naming conventions make API endpoints predictable, readable, and consistent.
+
+Follow these conventions when designing REST APIs:
+
+### Use nouns
+
+```text
+/products
+/orders
+/categories
+/payments
+```
+
+Avoid action based endpoints:
+
+```text
+| Avoid              | Prefer               |
+| ------------------ | -------------------- |
+| `/getProducts`     | `GET /products`      |
+| `/createOrder`     | `POST /orders`       |
+| `/deleteProduct/1` | `DELETE /products/1` |
+```
+
+### Use plural resource names
+
+```text
+/products
+/orders
+/users
+/categories
+```
+
+### Use HTTP methods to represent operations
+
+```text
+GET    /products
+POST   /products
+PUT    /products/{productId}
+DELETE /products/{productId}
+```
+
+### Use path variables for specific resources
+
+```text
+GET /products/101
+GET /orders/1001
+GET /categories/1
+```
 
 ---
 
@@ -738,53 +795,6 @@ This also prevents the customer from refunding more than the amount actually pai
 | HTTP Verb | Endpoint                | Status | Expected Response            |
 | --------- | ----------------------- | -----: | ---------------------------- |
 | GET       | `/cancellation-reasons` |    200 | List of cancellation reasons |
-
----
-
-# 17. REST Naming Conventions
-
-### Use nouns
-
-```text
-/products
-/orders
-/categories
-/payments
-```
-
-Avoid:
-
-```text
-/getProducts
-/createOrder
-/deleteProduct
-```
-
-### Use plural resource names
-
-```text
-/products
-/orders
-/users
-/categories
-```
-
-### Use HTTP methods to represent operations
-
-```text
-GET    /products
-POST   /products
-PUT    /products/{productId}
-DELETE /products/{productId}
-```
-
-### Use path variables for specific resources
-
-```text
-GET /products/101
-GET /orders/1001
-GET /categories/1
-```
 
 ---
 

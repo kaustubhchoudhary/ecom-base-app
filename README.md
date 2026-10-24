@@ -295,6 +295,17 @@ The `docs/` directory contains the documentation required to understand the appl
 | API Specifications    | `docs/03_api_specifications.md`   | API contract and endpoints          |
 | Postman Collection    | `docs/04_postman_collection.json` | API requests and test data          |
 
+### Recommended Reading Order
+
+Before testing the APIs, review the following documents in order:
+
+1. **[Business Requirements Document]**
+2. **[Entity Relationship Schema]**
+3. **[API Specifications]**
+4. **[Postman Collection]**
+
+Following this sequence will help you understand the application before interacting with its APIs.
+
 ## 7. Learning Opportunities
 
 This project serves as a foundation for exploring additional technologies and software engineering practices. Use the existing application to implement and practise the following:
