@@ -42,7 +42,7 @@ Start by reviewing the business requirements and database design. Then set up th
 
 ## 3. Prerequisites and Installation
 
-This project is developed using **Visual Studio Code (VS Code)** on Windows. Before running the application, install and configure the following tools.
+Before running the application, install and configure the following tools.
 
 ### 3.1 Install Java Development Kit (JDK)
 
@@ -82,7 +82,7 @@ MySQL Workbench provides a graphical interface for connecting to MySQL, executin
 
 **Note:** MySQL Server and MySQL Workbench are separate tools. Installing Workbench alone does not install the database server.
 
-### 3.4 Install Visual Studio Code
+### 3.4 Install Visual Studio Code and required extensions
 
 VS Code is the recommended editor for exploring and working with this project.
 
@@ -90,6 +90,13 @@ VS Code is the recommended editor for exploring and working with this project.
 2. Run the Windows installer and complete the installation.
 3. Open VS Code and install the **Extension Pack for Java** from the Extensions view.
 4. Open the cloned `ecom-base-app` folder in VS Code.
+
+After installing VS Code, open the Extensions view and install the following extensions:
+
+- **Extension Pack for Java** - Provides essential Java development tools.
+- **Spring Boot Extension Pack** - Provides tools for developing Spring Boot applications.
+
+Search for each extension by name in the VS Code Extensions Marketplace and install it.
 
 ### 3.5 Install Git
 
@@ -151,8 +158,9 @@ cd ecom-base-app
 
 ### 4.2 Create the Database
 
-1. Open MySQL Workbench and connect to your local MySQL Server.
-2. Open a new SQL query tab and execute:
+1. Open Task Manager, go to Services, locate MySQL service and run it.
+2. Open MySQL Workbench and connect to your local MySQL Server.
+3. Open a new SQL query tab and execute:
 
 ```sql
 CREATE DATABASE ecommerce_db;
@@ -188,37 +196,44 @@ server.port=9192
 
 Save the file before proceeding.
 
-### 4.4 Run the Application
+### 4.4 Run and Verify the Application
 
-Ensure that MySQL Server is running. Open the VS Code terminal in the project root directory and execute:
+1. Open the VS Code terminal in the project root directory.
+2. Run the application:
 
-```powershell
-.\mvnw.cmd spring-boot:run
-```
+   ```powershell
+   .\mvnw.cmd spring-boot:run
+   ```
 
-Wait for Spring Boot to finish starting. Check the terminal logs for a successful startup message.
+3. Check the terminal logs for successful Spring Boot startup on port `9192`.
+4. If SQL logging is enabled, observe the SQL statements in the terminal.
+5. Open MySQL Workbench and refresh the `ecommerce_db` schema to verify that the application tables have been created.
 
-### 4.5 Verify the Application
+### 4.5 Test the API:
 
-#### Test the Server:
+To test the REST APIs, import the Postman collection provided in `docs/04_postman_collection.json`.
 
-After starting the application, check the terminal logs to ensure that Spring Boot has started successfully.
-
-#### Test the API:
-
-All REST APIs in this application use the following base URL:
+The collection is available at:
 
 ```text
-http://localhost:9192/api/v1
+docs/04_postman_collection.json
 ```
 
-To verify that an API is responding, open Postman and send the following request:
+### Import into Postman
 
-```http
-GET http://localhost:9192/api/v1/categories
+1. Open Postman.
+2. Click **Import**.
+3. Browse and select **04_postman_collection.json** from the project's `docs/` folder.
+4. Open the imported collection and expand the **E-Com Base API → Categories** folder.
+5. Select **Get All Categories** and click **Send**.
+
+The request uses the following API URL:
+
+```text
+http://localhost:9192/api/v1/categories/
 ```
 
-If the database contains no categories, the API returns the following response:
+If the database contains no categories, the API returns:
 
 ```json
 {
@@ -227,144 +242,71 @@ If the database contains no categories, the API returns the following response:
 }
 ```
 
-This response indicates that no categories are currently available. You can create categories using the available API endpoints and retrieve them using the corresponding GET request.
+- This indicates that no categories are currently available.
+- You can create categories using the available API requests and execute **Get All Categories** again to retrieve them.
 
-## 6. Project Documentation
+## 5. Project Structure
 
-Detailed project documentation is available inside the `docs/` directory.
-
-| Document              | Location                          | Purpose                              |
-| --------------------- | --------------------------------- | ------------------------------------ |
-| Business Requirements | `docs/01_brd.md`                  | Business requirements and scope      |
-| ER Schema             | `docs/02_er_schema.md`            | Database entities and relationships  |
-| API Specifications    | `docs/03_api_specifications.md`   | API contract and endpoints           |
-| API Authorization     | `docs/04_protected_apis.md`       | Authentication, roles and API access |
-| Postman Collection    | `docs/05_postman_collection.json` | API requests and test data           |
-
-## 7. Project Structure
+The following structure highlights the main application code, configuration, and supporting resources.
 
 ```text
 ecom-base-app/
-│
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   └── resources/
-│   │       └── application.properties
-│   │
-│   └── test/
-│
 ├── docs/
 │   ├── 01_brd.md
 │   ├── 02_er_schema.md
 │   ├── 03_api_specifications.md
-│   ├── 04_protected_apis.md
-│   └── 05_postman_collection.json
-│
-├── pom.xml
-├── mvnw
-├── mvnw.cmd
-└── README.md
+│   ├── 04_postman_collection.json
+│   └── ecommerce_db.sql
+├── learning_resources/
+├── product_images/
+└── src/
+    ├── main/
+    │   ├── java/ecom/base/app/
+    │   │   ├── orders/
+    │   │   ├── payments/
+    │   │   ├── product/
+    │   │   ├── response/
+    │   │   ├── role/
+    │   │   ├── transactions/
+    │   │   ├── user/
+    │   │   └── EcomBaseAppApplication.java
+    │   └── resources/
+    │       └── application.properties
+    └── test/
 ```
 
-## 8. Import Postman Collection
+### Directory Overview
 
-The project includes a Postman collection for testing the APIs.
+- **`src/main/java/ecom/base/app/`** - Java application source code.
+- **`src/main/resources/application.properties`** - Server port and database configuration.
+- **`src/test/`** - Test source directory.
+- **`docs/`** - Project documentation, API specifications, Postman collection, and SQL script.
+- **`learning_resources/`** - Learning materials and reference images.
+- **`product_images/`** - Sample images for product API testing.
 
-The collection is available at:
+## 6. Project Documentation
 
-```text
-docs/05_postman_collection.json
-```
+The `docs/` directory contains the documentation required to understand the application's requirements, database design, and APIs.
 
-### Import into Postman
+| Document              | Location                          | Purpose                             |
+| --------------------- | --------------------------------- | ----------------------------------- |
+| Business Requirements | `docs/01_brd.md`                  | Business requirements and scope     |
+| ER Schema             | `docs/02_er_schema.md`            | Database entities and relationships |
+| API Specifications    | `docs/03_api_specifications.md`   | API contract and endpoints          |
+| Postman Collection    | `docs/04_postman_collection.json` | API requests and test data          |
 
-1. Open Postman.
-2. Click **Import**.
-3. Select **05_postman_collection.json** from the project's `docs/` folder.
-4. Postman will import the complete **E-Com Base API** collection.
-5. Open the imported collection and use the required API requests.
+## 7. Learning Opportunities
 
-The collection uses the following base URL:
+This project serves as a foundation for exploring additional technologies and software engineering practices. Use the existing application to implement and practise the following:
 
-```text
-http://localhost:9192/api/v1
-```
+- **API Documentation:** Swagger / OpenAPI
+- **Testing:** JUnit 5, Mockito, Spring Boot Test
+- **Security:** Spring Security, JWT, role-based access control, OAuth 2.0
+- **Backend Engineering:** Validation, exception handling, logging, AOP, Actuator
+- **Frontend Integration:** Angular or React
+- **Microservices:** Decompose the application into independent services
+- **DevOps:** Docker, Kubernetes, Jenkins, CI/CD
+- **Cloud:** Deploy the application to AWS
+- **AI Integration:** Spring AI, LLM APIs, and Retrieval-Augmented Generation (RAG)
 
-Make sure the Spring Boot application is running before sending requests.
-
-````
-
-## 9. Adding data containing image
-
-### Testing Product Creation API
-
-To test the Product creation API using Postman:
-
-1. Open the `E-Com Base API` collection.
-2. Open the `Products` folder.
-3. Select **Add a Product**.
-4. Set the request method to `POST`.
-5. Set the URL to:
-
-```text
-   {{baseUrl}}/products
-````
-
-6. Select **Body → form-data**.
-
-7. Add a field named `product` with type **Text**.
-
-8. Set the `Content-Type` of the `product` part to:
-
-   ```text
-   application/json
-   ```
-
-9. Enter the Product JSON in the `product` field.
-
-10. Add a field named `image` with type **File**.
-
-11. Select the product image file.
-
-12. Click **Send**.
-
-13. Verify that the API returns `201 Created`.
-
-```
-
-That captures the exact steps someone needs to successfully test your multipart Product API.
-```
-
-## 10. Current Status
-
-The project currently provides the base application structure and the initial Category functionality.
-
-Additional modules will be implemented progressively.
-
-## 10. Future Enhancements
-
-The project can be extended with technologies and concepts such as:
-
-- Spring Security
-- JWT Authentication
-- Validation
-- Exception Handling
-- AOP
-- Actuator
-- JUnit 5
-- Mockito
-- Spring Boot Testing
-- Swagger / OpenAPI
-- Microservices
-- Kafka
-- Docker
-- CI/CD
-
-```
-
-```
-
-```
-
-```
+Implement these features incrementally on separate Git branches so you can practise each technology independently while maintaining a working base application.
