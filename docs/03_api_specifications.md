@@ -104,11 +104,11 @@ Follow these conventions when designing REST APIs:
 
 Avoid action based endpoints:
 
-| Avoid              | Prefer               |
-| ------------------ | -------------------- |
-| `/getProducts`     | `GET /products`      |
-| `/createOrder`     | `POST /orders`       |
-| `/deleteProduct/1` | `DELETE /products/1` |
+| Avoid            | Prefer             |
+| ---------------- | ------------------ |
+| /getProducts     | GET /products      |
+| /createOrder     | POST /orders       |
+| /deleteProduct/1 | DELETE /products/1 |
 
 ### Use plural resource names
 
